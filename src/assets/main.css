@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Custom text color */
+.text-primary-turquoise {
+  color: #00ded5;
+}
+
+/* Animated background (https://wweb.dev/resources/animated-css-background-generator) */

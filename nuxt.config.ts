@@ -5,5 +5,9 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
   ],
-  srcDir: 'src/'
+  srcDir: 'src/',
+  tailwindcss: {
+    cssPath: '~/assets/main.css',
+  },
+  
 })
