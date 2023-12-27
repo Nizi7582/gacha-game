@@ -9,5 +9,11 @@ export default defineNuxtConfig({
   tailwindcss: {
     cssPath: '~/assets/main.css',
   },
-  
+  pages: true,
+  imports: {
+    dirs: ['store', 'utils']
+  },
+  // build: {
+  //   transpile: ['gsap'],
+  // },
 })

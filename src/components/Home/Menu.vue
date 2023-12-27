@@ -1,6 +1,6 @@
 <template>
     <div class="flex items-end justify-center h-full">
-        <div class="flex justify-center mb-10 group">
+        <NuxtLink to="/invocations" class="flex justify-center mb-10 group">
             <div
                 class="absolute px-2 pt-1 text-2xl font-semibold tracking-wider text-white duration-700 transform border-2 border-green-800 shadow-xl opacity-0 bg-gradient-to-tl from-gray-900 to-green-900 rounded-xl transition-allx bottom-28 group-hover:bottom-32 lg:text-3xl group-hover:opacity-100"
             >
@@ -18,6 +18,6 @@
             <button
                 class="absolute border-2 bottom-7 rounded-md border-gray-800 bg-gradient-to-tl from-gray-900 to-green-900 w-20 h-20 rotate-[0deg] group-hover:rotate-[135deg] duration-700 transition"
             ></button>
-        </div>
+        </NuxtLink>
     </div>
 </template>
