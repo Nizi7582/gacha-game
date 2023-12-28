@@ -1,22 +1,21 @@
 <script setup>
+import { useUserStore } from '~/store/user';
 
-	const props = defineProps({
-		title: String,
-		pageName: String,
-	})
+const userStore = useUserStore()
+const supabase = useSupabaseClient()
 
-	// watch(() =>
-	// 	[general.isTransitionStart, general.isPreloaderVisible],
-	// 	([transitionStart, preloaderVisibility]) => {
-
-	// 	if(transitionStart && !preloaderVisibility) {
-	// 		firstScreenAnimation({parent: `.${props.pageName}`})
-	// 	}
-	// })
-
-
+async function logout() {
+  try {
+    userStore.userData.isLoggedIn = false
+    userStore.userData.email = ''
+    const { error } = await supabase.auth.signOut()
+	await navigateTo('/login')
+    if (error) throw error;
+  } catch (error) {
+    console.log(error.message)
+  }
+}
 </script>
-
 
 <template>
     <div>
@@ -30,6 +29,11 @@
                     Strabismo
                 </NuxtLink>
             </div>
+			<div class="absolute z-50 page-wrap bottom-6 right-6">
+				<button @click="logout()" class="text-3xl text-red-700 lg:text-4xl">
+					Disconnect
+				</button>
+			</div>
             <slot />
         </div>
     </div>
