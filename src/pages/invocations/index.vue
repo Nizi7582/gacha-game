@@ -89,7 +89,7 @@ function carteSuivante() {
         </div>
       </div>
       <div
-        class="w-full h-screen bg-[url('~/assets/img/invocation.jfif')] bg-center bg-cover fixed top-0 -z-20"
+        class="w-full h-screen bg-[url('~/assets/img/invocation-bg.jpg')] bg-center bg-cover fixed top-0 -z-20"
       >
       </div>
     </div>

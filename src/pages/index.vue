@@ -16,14 +16,21 @@ definePageMeta({
 
 const pourcentage = ref(0)
 const level = ref(0)
+const levelCount = ref(0)
 const dialog = ref(false)
 
 watch(pourcentage, (newPourcentage) => {
   if (newPourcentage >= 100) {
     level.value += 1
     pourcentage.value = newPourcentage - 100
+    levelCount.value = level.value + pourcentage.value
+    console.log(levelCount.value)
   }
 })
+
+
+5.65
+
 </script>
 
 <style>
@@ -46,10 +53,10 @@ watch(pourcentage, (newPourcentage) => {
   <NuxtLayout name="custom" class="w-full overflow-hidden">
     <div class="relative w-full h-screen">
       <div class="w-full h-full">
-        <div class="flex items-start justify-between p-6">
+        <div class="flex items-start justify-between">
           <div class="flex items-center w-full h-full">
             <div
-              class="flex w-full max-w-lg p-4 border border-gray-800 rounded-md gap-x-6 bg-gradient-to-bl from-gray-900 to-green-900"
+              class="flex w-full max-w-lg p-4 border border-gray-800 rounded-br-3xl gap-x-6 bg-gradient-to-bl from-gray-900 to-green-900"
             >
               <!-- <img
                 src="~/assets/img/empty-avatar.jpg"
@@ -60,9 +67,6 @@ watch(pourcentage, (newPourcentage) => {
                 class="border-4 border-yellow-800 rounded-full h-28"
               />
               <div class="flex flex-col justify-center w-full">
-                <button
-                  class="absolute w-20 h-20 transition duration-700 rotate-45 border border-gray-800 rounded-md bottom-7 bg-gradient-to-b from-yellow-900 via-green-900 to-yellow-900 group-hover:rotate-180"
-                ></button>
                 <div class="text-4xl text-white">
                   <span class="text-yellow-600" @click="pourcentage += 23">
                     Nizi
