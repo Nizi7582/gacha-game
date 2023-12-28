@@ -100,7 +100,7 @@ watch(pourcentage, (newPourcentage) => {
       </div>
 
       <div
-        class="w-full h-screen bg-[url('https://files.oaiusercontent.com/file-gWpiyg06uLhP8pZHY8BIvwxx?se=2023-12-28T16%3A00%3A03Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D966b780d-1b01-464e-b07f-dc85a62051c4.webp&sig=ViFlYH6GJfqXUuxltAmOdnDzVjFitvqhNtDjUSLLqXs%3D')] bg-center bg-cover fixed top-0 -z-20"
+        class="w-full h-screen bg-[url('~/assets/img/home.png')] bg-center bg-cover fixed top-0 -z-20"
       ></div>
       <div class="absolute bottom-0 z-10 right-[10%] size-custom">
         <button
