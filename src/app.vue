@@ -1,15 +1,17 @@
 <script setup>
+const supabase = useSupabaseClient()
+
 import { useUserStore } from '~/store/user';
 
-const user =  useSupabaseUser()
+const userSupabase = useSupabaseUser()
 const userStore = useUserStore()
 
-// watch(userStore.userData.isLoggedIn, (state) => {
-//   if (state === true) {
-//     location.reload()
-//     navigateTo('/')
-//   }
-// });
+
+if (userSupabase && userSupabase.value && userSupabase.value.role === 'authenticated') {
+  userStore.userData.isLoggedIn = true
+  userStore.userData.email = userSupabase.value.email
+}
+
 </script>
 
 <template>
