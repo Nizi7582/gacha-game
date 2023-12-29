@@ -1,12 +1,9 @@
 <script setup lang="ts">
-// const { $gsap: gsap, $Draggable: Draggable } = useNuxtApp();
+import { useUserStore } from '~/store/user';
 
-// definePageMeta({
-//   pageTransition: {
-//     name: 'slide-right',
-//     mode: 'out-in'
-//   },
-// })
+const userStore = useUserStore()
+const supabase = useSupabaseClient()
+const userSupabase = supabase.auth.getUser()
 
 definePageMeta({
   pageTransition: {
@@ -19,17 +16,38 @@ const level = ref(0)
 const levelCount = ref(0)
 const dialog = ref(false)
 
-watch(pourcentage, (newPourcentage) => {
+// async function sendLevel() {
+//    const test = await supabase.from('users').update({ level: level.value }).eq('email', userStore.userData.email).select()
+//    if (test) {
+//     console.log(supabase.auth.getUser())
+//    }
+// }
+onMounted(async () => {
+  // Retrieve user data based on email
+  const { data, error } = await supabase
+    .from('users')
+    .select('*') // '*' selects all columns; you can specify specific columns if needed
+    .eq('email', userStore.userData.email);
+
+  if (error) {
+    console.error('Error fetching user data:', error);
+  } else {
+    // Store the user data in the userData ref
+    level.value = Math.trunc(data[0].level)
+    pourcentage.value = (data[0].level - level.value)*100
+  }
+});
+
+watch(pourcentage, async (newPourcentage) => {
+  levelCount.value = level.value + newPourcentage/100
+  
+  const test = await supabase.from('users').update({level: levelCount.value}).eq('email', userStore.userData.email)
+  
   if (newPourcentage >= 100) {
     level.value += 1
     pourcentage.value = newPourcentage - 100
-    levelCount.value = level.value + pourcentage.value
-    console.log(levelCount.value)
   }
 })
-
-
-5.65
 
 </script>
 
@@ -73,7 +91,9 @@ watch(pourcentage, (newPourcentage) => {
                   </span>
                   - Level {{ level }}
                 </div>
-
+                <div class="text-xl text-white">
+                  {{ userStore.userData.email}}
+                </div>
                 <div class="">
                   <div class="relative">
                     <div class="p-1 border border-yellow-800 rounded-full">
@@ -85,7 +105,7 @@ watch(pourcentage, (newPourcentage) => {
                           '%; height: 85%; max-width: 100%'
                         "
                       >
-                        <span class="p-1 text-white">{{ pourcentage }}%</span>
+                        <span class="p-1 text-white">{{ Math.round(pourcentage) }}%</span>
                       </div>
                     </div>
                   </div>
