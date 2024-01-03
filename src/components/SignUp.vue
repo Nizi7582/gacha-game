@@ -59,7 +59,7 @@ const handleSignup = async () => {
         <div class="pt-4">
           <input
             type="submit"
-            class="block px-4 pt-2 pb-1 mx-auto text-white transition border rounded-md cursor-pointer bg-gradient-to-bl from-gray-900 to-green-900 hover:scale-110"
+            class="block px-4 pt-2 pb-1 mx-auto text-white transition border rounded-md cursor-pointer bg-gradient-to-bl from-gray-900 via-purple-900 to-blue-900 hover:scale-110"
             :value="'Starto Gamo'"
           />
         </div>

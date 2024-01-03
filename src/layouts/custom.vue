@@ -23,10 +23,9 @@ async function logout() {
         <div class="page-wrap">
 			<!-- <PageTransition /> -->
 
-            <div class="absolute z-50 page-wrap top-6 right-6">
-
-                <NuxtLink to="/" class="text-3xl text-white lg:text-4xl">
-                    NekoWorldo
+            <div class="absolute z-50 page-wrap top-4 right-4">
+                <NuxtLink to="/" >
+                    <img src="~/assets/img/gachat_logo.png" class="w-32" />
                 </NuxtLink>
             </div>
 			<div class="absolute z-50 page-wrap bottom-6 right-6">
