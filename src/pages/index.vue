@@ -77,6 +77,7 @@ watch(pourcentage, async (newPourcentage) => {
 </style>
 
 <template>
+  <NuxtLayout name="custom">
   <div class="w-full overflow-hidden">
     <div
       v-if="userData && userData[0] && userData[0].character != ''"
@@ -238,4 +239,5 @@ watch(pourcentage, async (newPourcentage) => {
       </div>
     </div>
   </div>
+</NuxtLayout>
 </template>
