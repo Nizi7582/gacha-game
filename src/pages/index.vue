@@ -107,6 +107,11 @@ watch(pourcentage, async (newPourcentage) => {
                 <div class="text-xl text-white">
                   {{ userStore.userData.email }}
                 </div>
+                <div class="text-xl text-white">
+                  <NuxtLink to="/inventory" >
+                    Inventory
+                  </NuxtLink>
+                </div>
                 <div class="">
                   <div class="relative">
                     <div class="p-1 border border-yellow-800 rounded-full">
