@@ -1,66 +1,26 @@
-import { ref } from 'vue';
+import { useUserStore } from '../store/user'
 
-// Define the interface for the 'Card' object
-interface Card {
-  image: string;
-  name: string;
-  probability: number;
+const userStore = useUserStore()
+
+interface Map {
+  className: string;
+  number: string;
 }
 
-// Define the class for the 'InvocationServices'
-class InvocationServices {
-  // Array of 'Card' objects representing different cards in the game
-  cards: Card[] = [
-    { image: '/_nuxt/assets/cards/testCard2.jpg', name: 'test2', probability: 0.7 },
-    { image: '/_nuxt/assets/cards/testCard3.jpg', name: 'test3', probability: 0.2 },
-    { image: '/_nuxt/assets/cards/testCard4.jpg', name: 'test4', probability: 0.1 },
+class FightServices {
+  maps: Map[] = [
+    { className: 'top-[40%] left-[25%]', number: '1'},
+    { className: 'top-[30%] left-[33%]', number: '2'},
+    { className: 'top-[20%] left-[40%]', number: '3'},
+    { className: 'top-[42%] right-[28%]', number: '4'},
+    { className: 'top-[36%] right-[14%]', number: '5'},
+    { className: 'top-[46%] right-[41%]', number: '6'},
+    { className: 'top-[21%] right-[25%]', number: '7'},
+    { className: 'top-[25%] right-[40%]', number: '8'},
   ];
-
-  // Reactive variables for managing game state
-  drawnCards = ref<Array<Card>>([]);
-  showAllCards = ref(false);
-  currentCardIndex = ref(0);
-
-  // Method to draw a card based on probabilities
-  drawCard(): Card {
-    const randomValue = Math.random();
-    let cumulativeProbability = 0;
-
-    for (const card of this.cards) {
-      cumulativeProbability += card.probability;
-      if (randomValue <= cumulativeProbability) {
-        return card;
-      }
-    }
-    return this.cards[this.cards.length - 1];
-  }
-
-  // Method to perform a simple card draw
-  performSingleDraw(): void {
-    const drawnCard = this.drawCard();
-    this.drawnCards.value = [drawnCard];
-    this.showAllCards.value = false;
-    this.currentCardIndex.value = 0;
-  }
-
-  // Method to perform multiple card draws
-  performMultipleDraws(): void {
-    this.drawnCards.value = [];
-    for (let i = 0; i < 10; i++) {
-      const drawnCard = this.drawCard();
-      this.drawnCards.value.push(drawnCard);
-    }
-    this.showAllCards.value = false;
-    this.currentCardIndex.value = 0;
-  }
-
-  // Method to move to the next card in the drawn cards
-  nextCard(): void {
-    this.currentCardIndex.value += 1;
-    if (this.currentCardIndex.value === this.drawnCards.value.length - 1) {
-      this.showAllCards.value = true;
-    }
+  async sendZone(zoneNumber) {
+    useUserStore.
   }
 }
 
-export default InvocationServices;
+export default FightServices;
