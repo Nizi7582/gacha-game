@@ -12,12 +12,21 @@
           class="h-12 mx-auto transition duration-700 opacity-60 group-hover:opacity-100 group-hover:scale-105"
         />
       </button>
+      
       <button
         class="absolute w-20 h-20 transition duration-700 rotate-45 border border-gray-800 rounded-md bottom-7 bg-gradient-to-b from-yellow-900 via-blue-900 to-yellow-900 group-hover:rotate-180"
       ></button>
       <button
         class="absolute border-2 bottom-7 rounded-md border-gray-800 bg-gradient-to-tl from-gray-900 via-purple-900 to-blue-900 w-20 h-20 rotate-[0deg] group-hover:rotate-[135deg] duration-700 transition"
       ></button>
+    </NuxtLink>
+    <NuxtLink to="/fight">
+      <button class="absolute z-20 w-40 h-48 -bottom-4 left-4 group">
+        <img
+          src="~/assets/img/bag.png"
+          class="h-40 mx-auto transition duration-700 opacity-60 group-hover:opacity-100 group-hover:scale-105"
+        />
+      </button>
     </NuxtLink>
   </div>
 </template>
