@@ -7,6 +7,8 @@ export const useUserStore = defineStore('userStore', {
       userId: '',
       isLoggedIn: false,
       role: null,
+      zone: 0,
+      currentZone: 0,
     },
   }),
   actions: {
