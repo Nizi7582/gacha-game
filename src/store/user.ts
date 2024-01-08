@@ -1,7 +1,14 @@
 import { defineStore } from 'pinia';
 
+interface UserData {
+  email: string;
+  userId: string;
+  isLoggedIn: boolean;
+  role: string | null;
+}
+
 export const useUserStore = defineStore('userStore', {
-  state: () => ({
+  state: (): { userData: UserData } => ({
     userData: {
       email: '',
       userId: '',
@@ -10,7 +17,7 @@ export const useUserStore = defineStore('userStore', {
     },
   }),
   actions: {
-    registerUser(user) {
+    registerUser(user: UserData) {
       this.userData = user;
     },
   },
