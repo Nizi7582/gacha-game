@@ -39,7 +39,6 @@ const buttons = [
       <SignUp v-if="data.state === 'signup'"/>
       <SignIn v-if="data.state === 'login'"/>
       <!-- <About v-if="signup"/> -->
-      
     </div>
     <div
         class="w-full h-screen bg-[url('https://images5.alphacoders.com/866/866898.jpg')] bg-center bg-cover fixed top-0 -z-20" 

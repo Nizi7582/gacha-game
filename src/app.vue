@@ -1,6 +1,4 @@
 <script setup>
-const supabase = useSupabaseClient()
-
 import { useUserStore } from '~/store/user';
 
 const userSupabase = useSupabaseUser()

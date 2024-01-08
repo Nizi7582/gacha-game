@@ -1,70 +1,8 @@
 <script setup lang="ts">
-interface Carte {
-  image: string;
-  nom: string;
-  probabilite: number;
-}
+import InvocationServices from '../../services/InvocationServices';
 
-const cartes: Carte[] = [
-  {
-    image: '/_nuxt/assets/cards/testCard2.jpg',
-    nom: 'test2',
-    probabilite: 0.7,
-  },
-  {
-    image: '/_nuxt/assets/cards/testCard3.jpg',
-    nom: 'test3',
-    probabilite: 0.2,
-  },
-  {
-    image: '/_nuxt/assets/cards/testCard4.jpg',
-    nom: 'test4',
-    probabilite: 0.1,
-  },
-];
-
-const cartesTirees = ref<Array<Carte>>([]);
-const afficherToutesLesCartes = ref(false);
-const carteCourante = ref(0);
-
-const afficherCartesTirees = computed(() => cartesTirees.value.length > 0);
-
-function tirerCarte() {
-  const randomValue = Math.random();
-  let cumulativeProbability = 0;
-
-  for (const carte of cartes) {
-    cumulativeProbability += carte.probabilite;
-    if (randomValue <= cumulativeProbability) {
-      return carte;
-    }
-  }
-  return cartes[cartes.length - 1];
-}
-
-function invocationSimple() {
-  const carteTiree = tirerCarte();
-  cartesTirees.value = [carteTiree];
-  afficherToutesLesCartes.value = false;
-  carteCourante.value = 0;
-}
-
-function invocationMultiple() {
-  cartesTirees.value = [];
-  for (let i = 0; i < 10; i++) {
-    const carteTiree = tirerCarte();
-    cartesTirees.value.push(carteTiree);
-  }
-  afficherToutesLesCartes.value = false;
-  carteCourante.value = 0;
-}
-
-function carteSuivante() {
-  carteCourante.value += 1;
-  if (carteCourante.value === cartesTirees.value.length - 1) {
-    afficherToutesLesCartes.value = true;
-  }
-}
+// Create an instance of the 'InvocationServices' class
+const invocation = new InvocationServices();
 </script>
 
 <template>
@@ -76,37 +14,37 @@ function carteSuivante() {
         <div>
           <button
             class="px-4 py-2 text-white bg-blue-500 rounded"
-            @click="invocationSimple"
+            @click="invocation.performSingleDraw"
           >
             Invocation simple
           </button>
           <button
             class="px-4 py-2 ml-4 text-white bg-blue-500 rounded"
-            @click="invocationMultiple"
+            @click="invocation.performMultipleDraws"
           >
             Invocation multiple
           </button>
         </div>
 
-        <div v-if="afficherCartesTirees" class="flex justify-center mt-8">
+        <div v-if="invocation.showAllCards" class="flex justify-center mt-8">
           <div>
-            <h2 v-if="cartesTirees.length === 1" class="text-2xl subtitle">
+            <h2 v-if="invocation.drawnCards.value.length === 1" class="text-2xl subtitle">
               Carte tirée :
             </h2>
             <h2 v-else class="text-2xl subtitle">Cartes tirées :</h2>
 
             <div
-              v-if="!afficherToutesLesCartes"
+              v-if="!invocation.showAllCards"
               class="mt-4 single-card-container"
             >
               <img
-                :src="cartesTirees[carteCourante].image"
-                :alt="cartesTirees[carteCourante].nom"
+                :src="invocation.drawnCards.value[invocation.currentCardIndex.value].image"
+                :alt="invocation.drawnCards.value[invocation.currentCardIndex.value].name"
                 class="w-32 card-image"
               />
               <button
-                @click="carteSuivante"
-                v-if="carteCourante < cartesTirees.length - 1"
+                @click="invocation.nextCard"
+                v-if="invocation.currentCardIndex.value < invocation.drawnCards.value.length - 1"
                 class="px-4 py-2 mt-4 text-white bg-blue-500 rounded next-button"
               >
                 Carte suivante
@@ -115,11 +53,11 @@ function carteSuivante() {
 
             <div v-else class="flex gap-5 mt-4">
               <img
-                v-for="carte in cartesTirees"
-                :src="carte.image"
-                :alt="carte.nom"
+                v-for="card in invocation.drawnCards.value"
+                :src="card.image"
+                :alt="card.name"
                 class="w-32 card-image"
-                :key="carte.nom"
+                :key="card.name"
               />
             </div>
           </div>
