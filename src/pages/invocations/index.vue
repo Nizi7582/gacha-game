@@ -10,22 +10,30 @@
           Multi
         </button>
       </div>
-      <div v-if="invokedCard" class="mt-4">
-        <h2 class="text-xl font-semibold mb-2">Carte Invoquée :</h2>
-        <img :src="invokedCard.image" alt="Carte invoquée" class="rounded-md w-60 shadow-md">
+      <div v-if="invokedCards.length > 0" class="mt-4">
+        <h2 class="text-xl font-semibold mb-2">Cartes Invoquées :</h2>
+        <div class="grid grid-cols-5 gap-4">
+          <div v-for="(invokedCard, index) in invokedCards" :key="invokedCard.id">
+            <img :src="invokedCard.image" alt="Carte invoquée" class="rounded-md w-60 shadow-md">
+            <br v-if="(index + 1) % 5 === 0">
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useUserStore } from '~/store/user'
 
 const cards = ref([]);
 const supabase = useSupabaseClient();
 const invokedCard = ref(null);
-const userStore = useUserStore()
+const invokedCards = ref([]);
+const userStore = useUserStore();
+
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 onMounted(async () => {
   try {
@@ -43,7 +51,14 @@ onMounted(async () => {
   }
 });
 
+const clearInvokedCards = () => {
+  invokedCards.value = [];
+};
+
 const invokeMultipleCards = async (numberOfCards) => {
+  // Clear the history before invoking new cards
+  clearInvokedCards();
+
   try {
     const userEmail = userStore.userData.email;
 
@@ -75,6 +90,9 @@ const invokeMultipleCards = async (numberOfCards) => {
           
           console.log('Quantité mise à jour avec succès:', updatedQuantity);
           console.log('Image path:', randomCard.image);
+
+          // Push the invoked card to the array
+          invokedCards.value.push(randomCard);
         } else {
           // Si aucune carte n'existe, insérer une nouvelle ligne avec une quantité de 1
           const { data, error } = await supabase.from('user_cards').insert([
@@ -89,17 +107,25 @@ const invokeMultipleCards = async (numberOfCards) => {
             console.error('Erreur lors de l\'insertion dans la table card_user:', error.message);
           } else {
             console.log('Invocation enregistrée avec succès dans la table card_user:', data);
+
+            // Push the invoked card to the array
+            invokedCards.value.push(randomCard);
           }
         }
       }
+
+      // Introduce a delay of 2 seconds before invoking the next card
+      await delay(2000);
     }
   } catch (error) {
     console.error('Une erreur est survenue lors de l\'invocation de la carte:', error.message);
   }
 };
 
-
 const invokeRandomCard = async () => {
+  // Clear the history before invoking new cards
+  clearInvokedCards();
+
   try {
     const randomIndex = Math.floor(Math.random() * cards.value.length);
     invokedCard.value = cards.value[randomIndex];
@@ -130,6 +156,9 @@ const invokeRandomCard = async () => {
         } else {
           console.log('Quantité mise à jour avec succès:', updateData);
           console.log('Image path:', invokedCard.value.image);
+
+          // Set the invoked card to the array
+          invokedCards.value.push(invokedCard.value);
         }
       } else {
         // Si aucune carte n'existe, insérer une nouvelle ligne avec une quantité de 1
@@ -145,9 +174,15 @@ const invokeRandomCard = async () => {
           console.error('Erreur lors de l\'insertion dans la table card_user:', error.message);
         } else {
           console.log('Invocation enregistrée avec succès dans la table card_user:', data);
+
+          // Set the invoked card to the array
+          invokedCards.value.push(invokedCard.value);
         }
       }
     }
+
+    // Introduce a delay of 2 seconds before invoking the next card
+    await delay(2000);
   } catch (error) {
     console.error('Une erreur est survenue lors de l\'invocation de la carte:', error.message);
   }
