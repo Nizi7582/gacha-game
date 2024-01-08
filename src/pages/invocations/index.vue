@@ -8,8 +8,8 @@ const invocation = new InvocationServices();
 <template>
   <NuxtLayout name="custom" class="w-full">
     <div class="flex justify-center p-8">
-      <div class="p-10 border-2 border-black rounded-xl">
-        <h1 class="mb-8 text-4xl text-center">Le Jeu de Gachat</h1>
+      <div class="absolute px-10 py-5 border-2 rounded-md border-gray-800 bg-gradient-to-tl from-gray-900 via-purple-900 to-blue-900 bg-opacity-20">
+        <h1 class="mb-8 text-4xl text-center text-white">Le Jeu de Gachat</h1>
 
         <div>
           <button
@@ -26,7 +26,7 @@ const invocation = new InvocationServices();
           </button>
         </div>
 
-        <div v-if="invocation.showAllCards" class="flex justify-center mt-8">
+        <div v-if="invocation.showAllCards" class="flex justify-center mt-8 text-white">
           <div>
             <h2 v-if="invocation.drawnCards.value.length === 1" class="text-2xl subtitle">
               Carte tirée :
