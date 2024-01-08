@@ -1,7 +1,5 @@
 import { useUserStore } from '../store/user'
 
-const userStore = useUserStore()
-
 interface Map {
   className: string;
   number: string;
@@ -19,7 +17,8 @@ class FightServices {
     { className: 'top-[25%] right-[40%]', number: '8'},
   ];
   async sendZone(zoneNumber) {
-    useUserStore.
+    const userStore = useUserStore()
+    userStore.userData.currentZone = zoneNumber
   }
 }
 
