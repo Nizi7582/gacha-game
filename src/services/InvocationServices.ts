@@ -9,17 +9,15 @@ interface Card {
 
 // Define the class for the 'InvocationServices'
 class InvocationServices {
-  // Array of 'Card' objects representing different cards in the game
-  cards: Card[] = [
-    { image: '/_nuxt/assets/cards/testCard2.jpg', name: 'test2', probability: 0.7 },
-    { image: '/_nuxt/assets/cards/testCard3.jpg', name: 'test3', probability: 0.2 },
-    { image: '/_nuxt/assets/cards/testCard4.jpg', name: 'test4', probability: 0.1 },
-  ];
-
   // Reactive variables for managing game state
+  cards: Card[] = [];
   drawnCards = ref<Array<Card>>([]);
   showAllCards = ref(false);
   currentCardIndex = ref(0);
+
+  constructor(cards: Card[]) {
+    this.cards = cards;
+  }
 
   // Method to draw a card based on probabilities
   drawCard(): Card {
