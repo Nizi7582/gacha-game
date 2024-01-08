@@ -9,7 +9,7 @@ const invocation = new InvocationServices();
   <NuxtLayout name="custom" class="w-full">
     <div class="flex justify-center p-8">
       <div class="p-10 border-2 border-black rounded-xl">
-        <h1 class="mb-8 text-4xl text-center">Le Jeu de Gaïcha</h1>
+        <h1 class="mb-8 text-4xl text-center">Le Jeu de Gachat</h1>
 
         <div>
           <button
