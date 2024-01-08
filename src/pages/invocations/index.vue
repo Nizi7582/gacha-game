@@ -23,17 +23,16 @@
   </div>
 </template>
 
+
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useUserStore } from '~/store/user'
 
 const cards = ref([]);
 const supabase = useSupabaseClient();
 const invokedCard = ref(null);
 const invokedCards = ref([]);
-const userStore = useUserStore();
-
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const userStore = useUserStore()
 
 onMounted(async () => {
   try {
@@ -113,14 +112,12 @@ const invokeMultipleCards = async (numberOfCards) => {
           }
         }
       }
-
-      // Introduce a delay of 2 seconds before invoking the next card
-      await delay(2000);
     }
   } catch (error) {
     console.error('Une erreur est survenue lors de l\'invocation de la carte:', error.message);
   }
 };
+
 
 const invokeRandomCard = async () => {
   // Clear the history before invoking new cards
@@ -180,9 +177,6 @@ const invokeRandomCard = async () => {
         }
       }
     }
-
-    // Introduce a delay of 2 seconds before invoking the next card
-    await delay(2000);
   } catch (error) {
     console.error('Une erreur est survenue lors de l\'invocation de la carte:', error.message);
   }
