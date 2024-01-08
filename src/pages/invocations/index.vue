@@ -1,14 +1,11 @@
 <script setup lang="ts">
-// const { $gsap: gsap, $Draggable: Draggable } = useNuxtApp();
+interface Carte {
+  image: string;
+  nom: string;
+  probabilite: number;
+}
 
-// definePageMeta( {
-//   pageTransition: {
-//     name: 'page',
-//     mode: 'out-in'
-//   }
-// })
-
-const cartes = [
+const cartes: Carte[] = [
   {
     image: '/_nuxt/assets/cards/testCard2.jpg',
     nom: 'test2',
@@ -24,50 +21,48 @@ const cartes = [
     nom: 'test4',
     probabilite: 0.1,
   },
-]
+];
 
-const cartesTirees = ref([])
-const afficherToutesLesCartes = ref(false)
-const carteCourante = ref(0)
+const cartesTirees = ref<Array<Carte>>([]);
+const afficherToutesLesCartes = ref(false);
+const carteCourante = ref(0);
 
-const afficherCartesTirees = computed(() => {
-  return cartesTirees.value.length > 0
-})
+const afficherCartesTirees = computed(() => cartesTirees.value.length > 0);
 
 function tirerCarte() {
-  const randomValue = Math.random()
-  let cumulativeProbability = 0
+  const randomValue = Math.random();
+  let cumulativeProbability = 0;
 
   for (const carte of cartes) {
-    cumulativeProbability += carte.probabilite
+    cumulativeProbability += carte.probabilite;
     if (randomValue <= cumulativeProbability) {
-      return carte
+      return carte;
     }
   }
-  return cartes[cartes.length - 1]
+  return cartes[cartes.length - 1];
 }
 
 function invocationSimple() {
-  const carteTiree = tirerCarte()
-  cartesTirees.value = [carteTiree]
-  afficherToutesLesCartes.value = false
-  carteCourante.value = 0
+  const carteTiree = tirerCarte();
+  cartesTirees.value = [carteTiree];
+  afficherToutesLesCartes.value = false;
+  carteCourante.value = 0;
 }
 
 function invocationMultiple() {
-  cartesTirees.value = []
+  cartesTirees.value = [];
   for (let i = 0; i < 10; i++) {
-    const carteTiree = tirerCarte()
-    cartesTirees.value.push(carteTiree)
+    const carteTiree = tirerCarte();
+    cartesTirees.value.push(carteTiree);
   }
-  afficherToutesLesCartes.value = false
-  carteCourante.value = 0
+  afficherToutesLesCartes.value = false;
+  carteCourante.value = 0;
 }
 
 function carteSuivante() {
-  carteCourante.value += 1
+  carteCourante.value += 1;
   if (carteCourante.value === cartesTirees.value.length - 1) {
-    afficherToutesLesCartes.value = true
+    afficherToutesLesCartes.value = true;
   }
 }
 </script>
@@ -93,7 +88,7 @@ function carteSuivante() {
           </button>
         </div>
 
-        <div v-if="cartesTirees.length > 0" class="flex justify-center mt-8">
+        <div v-if="afficherCartesTirees" class="flex justify-center mt-8">
           <div>
             <h2 v-if="cartesTirees.length === 1" class="text-2xl subtitle">
               Carte tirée :
