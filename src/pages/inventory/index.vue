@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-100/40 h-screen">
-    <h2 class="text-2xl font-semibold text-center text-gray-800 py-6">
+    <h2 class="text-4xl font-semibold text-center text-gray-800 py-6">
       Le contenu de l'inventaire:
     </h2>
     <ul class="grid grid-cols-1 md:grid-cols-9 lg:grid-cols-6 gap-4">
