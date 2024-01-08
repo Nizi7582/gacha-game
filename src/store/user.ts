@@ -5,6 +5,8 @@ interface UserData {
   userId: string;
   isLoggedIn: boolean;
   role: string | null;
+  zone: number;
+  currentZone: number;
 }
 
 export const useUserStore = defineStore('userStore', {
