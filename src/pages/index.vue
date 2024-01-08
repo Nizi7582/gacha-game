@@ -79,8 +79,7 @@ watch(pourcentage, async (newPourcentage) => {
 <template>
   <NuxtLayout name="custom">
   <div class="w-full overflow-hidden">
-    <div
-      v-if="userData && userData[0] && userData[0].character != ''"
+    <div v-if="userData && userData[0] && userData[0].character != ''"
       class="relative w-full h-screen"
     >
       <div class="w-full h-full">
@@ -149,7 +148,7 @@ watch(pourcentage, async (newPourcentage) => {
         ></button>
       </div>
     </div>
-    <div v-else class="relative w-full h-screen">
+    <div v-if="userData && userData[0] && userData[0].character === ''" class="relative w-full h-screen" >
       <div class="p-4">
         <!-- <div class="flex items-center justify-center gap-4 bg-gradient-to-b from-purple-800 via-purple-900 to-blue-900">
           <div
@@ -243,6 +242,9 @@ watch(pourcentage, async (newPourcentage) => {
         </button>
       </div>
     </div>
+    <div v-else
+      class="w-full h-screen bg-[url('~/assets/img/home.png')] bg-center bg-cover fixed top-0 -z-20"
+    ></div>
   </div>
 </NuxtLayout>
 </template>
