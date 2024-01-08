@@ -16,7 +16,7 @@ if (userSupabase && userSupabase.value && userSupabase.value.role === 'authentic
   <div id="app" class="font-anime" >
     
     <div>
-      <NuxtPage/>
+      <NuxtPage />
       <PreLoader />
     </div>
     <link
