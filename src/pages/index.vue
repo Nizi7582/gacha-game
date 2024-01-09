@@ -3,7 +3,6 @@ import { useUserStore } from '~/store/user'
 
 const userStore = useUserStore()
 const supabase = useSupabaseClient()
-const userSupabase = supabase.auth.getUser()
 
 definePageMeta({
   pageTransition: {
@@ -18,7 +17,7 @@ const level = ref(0)
 const levelCount = ref(0)
 const dialog = ref(false)
 
-async function chooseCharacter(character_name) {
+async function chooseCharacter(character_name:String) {
   const test = await supabase.from('users').update({ character: character_name }).eq('email', userStore.userData.email)
 
    if (test) {
@@ -144,7 +143,7 @@ watch(pourcentage, async (newPourcentage) => {
       >
 
       </div>
-      <div class="absolute bottom-0 z-10 right-[10%] size-custom2 -z-10">
+      <div class="absolute bottom-0 right-[10%] size-custom2 -z-10">
         <div v-if="userStore && userStore.userData && userStore.userData.character === 'sumimasen'"
           @click="dialog = true"
           class="bg-[url('~/assets/img/cat_cross.png')] w-full h-full bg-cover"
