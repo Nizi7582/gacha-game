@@ -244,9 +244,7 @@ watch(pourcentage, async (newPourcentage) => {
         </button>
       </div>
     </div>
-    <div v-else
-      class="w-full h-screen bg-[url('~/assets/img/home.png')] bg-center bg-cover fixed top-0 -z-20"
-    ></div>
+    <!-- <div v-else class="w-full h-screen bg-[url('~/assets/img/home.png')] bg-center bg-cover fixed top-0 -z-20"></div> -->
   </div>
 </NuxtLayout>
 </template>
