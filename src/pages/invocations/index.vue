@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import CardInvoker from '~/services/CardInvoker';
+import CardInvoker from '~/services/Invocation';
 
 const test = ref(false);
 const cardInvoker = new CardInvoker();
