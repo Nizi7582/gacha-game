@@ -2,6 +2,7 @@
 import UserServices from '~/services/UserServices';
 
 const user = new UserServices()
+
 const email = ref('')
 const password = ref('')
 </script>

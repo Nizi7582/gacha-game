@@ -33,25 +33,31 @@ const staminaIcon = "https://cdn-icons-png.flaticon.com/512/5305/5305259.png";
 
 <template>
   <li class="relative bg-white rounded-xl shadow border-2" :class="cardClass">
-    <img :src="cardImage" class="rounded-t-xl" />
-
-    <div class="px-4 pb-2 text-center">
+    <div class="relative">
+      <div :class="[rarityClass, 'absolute uppercase text-4xl text-gray px-2 pt-2 bg-gray-300 rounded-tl-xl rounded-br-xl']">
+  {{ cardRarity }}
+</div>
+<div :class="[rarityClass, 'absolute uppercase right-0 text-4xl text-gray p-2 rounded-tr-xl rounded-bl-xl']">
+  <img src="https://img.icons8.com/emoji/48/000000/star-emoji.png" width="30px" height="30px" />
+</div>
+      <img :src="cardImage" class="rounded-t-xl" />
       <div
-        class="text-xl font-medium first-letter:uppercase text-gray-900 border-y pt-1 mb-4"
+        class="absolute bg-white bottom-0 right-0 px-4 py-2 w-full text-center text-white opacity-70 flex justify-center items-center"
+      >
+        <div class="flex justify-between items-center w-full mx-4">
+          <StatDisplay :icon="attackIcon" :value="cardAttack" />
+          <StatDisplay :icon="defenseIcon" :value="cardDefense" />
+          <StatDisplay :icon="staminaIcon" :value="cardStamina" />
+        </div>
+      </div>
+    </div>
+
+    <div class="px-4 text-center">
+      <div
+        class="text-xl font-medium first-letter:uppercase text-gray-900 border-y pt-1"
       >
         {{ cardName }}
       </div>
-      <div
-        class="absolute top-0 left-0 pl-3 pr-4 pt-2 rounded-tl-xl rounded-br-xl bg-gray-100/70"
-      >
-        <div :class="rarityClass" class="uppercase text-4xl">
-          {{ cardRarity }}
-        </div>
-      </div>
-      <StatDisplay :icon="attackIcon" :value="cardAttack" />
-      <StatDisplay :icon="defenseIcon" :value="cardDefense" />
-      <StatDisplay :icon="staminaIcon" :value="cardStamina" />
-      <div class="mt-2 text-gray-700">Quantité: {{ cardQuantity }}</div>
     </div>
   </li>
 </template>
