@@ -4,6 +4,17 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
+    '@nuxtjs/supabase'
   ],
-  srcDir: 'src/'
+  srcDir: 'src/',
+  tailwindcss: {
+    cssPath: '~/assets/main.css',
+  },
+  pages: true,
+  imports: {
+    dirs: ['store', 'utils']
+  },
+  // build: {
+  //   transpile: ['gsap'],
+  // },
 })
