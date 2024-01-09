@@ -1,13 +1,27 @@
 <script setup>
 import { useUserStore } from '~/store/user';
 
+const supabase = useSupabaseClient()
 const userSupabase = useSupabaseUser()
 const userStore = useUserStore()
-
 
 if (userSupabase && userSupabase.value && userSupabase.value.role === 'authenticated') {
   userStore.userData.isLoggedIn = true
   userStore.userData.email = userSupabase.value.email
+
+  // Retrieve user data based on email
+  const { data, error } = await supabase
+    .from('users')
+    .select('*') // '*' selects all columns; you can specify specific columns if needed
+    .eq('email', userStore.userData.email)
+
+  if (error) {
+    console.error('Error fetching user data:', error)
+  } else {
+    // Store the user data in the userData ref
+    userStore.userData.level = Math.trunc(data[0].level)
+    userStore.userData.character = data[0].character
+  }
 }
 
 </script>

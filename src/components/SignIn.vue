@@ -19,6 +19,7 @@ const handleLogin = async () => {
     userStore.userData.isLoggedIn = true
     userStore.userData.email = email.value
     navigateTo('/')
+    // reload.location()
   } catch (error) {
     alert(error.error_description || error.message)
   }
