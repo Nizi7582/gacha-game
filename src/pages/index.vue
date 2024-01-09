@@ -143,7 +143,7 @@ watch(pourcentage, async (newPourcentage) => {
       >
 
       </div>
-      <div class="absolute bottom-0 z-10 right-[10%] size-custom2 -z-10">
+      <div class="absolute bottom-0 right-[10%] size-custom2 -z-10">
         <div v-if="userStore && userStore.userData && userStore.userData.character === 'sumimasen'"
           @click="dialog = true"
           class="bg-[url('~/assets/img/cat_cross.png')] w-full h-full bg-cover"
