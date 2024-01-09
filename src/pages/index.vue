@@ -22,6 +22,7 @@ async function chooseCharacter(character_name:String) {
 
    if (test) {
     console.log('Personnage choisit')
+    location.reload();
    }
 }
 onMounted(async () => {
@@ -37,9 +38,8 @@ onMounted(async () => {
     // Store the user data in the userData ref
     level.value = Math.trunc(data[0].level)
     pourcentage.value = (data[0].level - level.value) * 100
-    userData.value = data
-    cat_choice.value = data.character
-    console.log(userData.value[0].email)
+    // userData.value = data
+    // userStore.userData.character = data[0].character
   }
 })
 
@@ -77,9 +77,9 @@ watch(pourcentage, async (newPourcentage) => {
 
 <template>
   <NuxtLayout name="custom">
-  <div class="w-full overflow-hidden">
-    <div v-if="userData && userData[0] && userData[0].character != ''"
-      class="relative w-full h-screen"
+  <div class="w-full relative overflow-hidden">
+    <div v-if="userStore && userStore.userData && userStore.userData.character != '' && userStore.userData.character != undefined"
+      class=" w-full h-screen"
     >
       <div class="w-full h-full">
         <div class="flex items-start justify-between">
@@ -97,10 +97,10 @@ watch(pourcentage, async (newPourcentage) => {
               />
               <div class="flex flex-col justify-center w-full">
                 <div class="text-4xl text-white">
-                  <span class="text-yellow-600" @click="pourcentage += 23">
+                  <span class="text-yellow-600 cursor-pointer" @click="pourcentage += 23">
                     Nizi
                   </span>
-                  - Level {{ level }}
+                  - Level {{ userStore.userData.level }}
                 </div>
                 <div class="text-xl text-white">
                   {{ userStore.userData.email }}
@@ -134,7 +134,7 @@ watch(pourcentage, async (newPourcentage) => {
 
           <div></div>
         </div>
-      <HomeMenu class="fixed top-0 right-0 left-0 z-10" />
+      <HomeMenu class="fixed bottom-0 left-0 right-0 z-10" />
 
       </div>
 
@@ -143,14 +143,14 @@ watch(pourcentage, async (newPourcentage) => {
       >
 
       </div>
-      <div class="absolute bottom-0 z-10 right-[10%] size-custom2">
-        <button v-if="userData && userData[0] && userData[0].character === 'sumimasen'"
+      <div class="absolute bottom-0 z-10 right-[10%] size-custom2 -z-10">
+        <div v-if="userStore && userStore.userData && userStore.userData.character === 'sumimasen'"
           @click="dialog = true"
           class="bg-[url('~/assets/img/cat_cross.png')] w-full h-full bg-cover"
-        ></button>
+        ></div>
       </div>
     </div>
-    <div v-if="userData && userData[0] && userData[0].character === ''" class="relative w-full h-screen" >
+    <div v-if="userStore.userData.character === ''" class="relative w-full h-screen" >
       <div class="p-4">
         <!-- <div class="flex items-center justify-center gap-4 bg-gradient-to-b from-purple-800 via-purple-900 to-blue-900">
           <div
