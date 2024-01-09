@@ -1,184 +1,44 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-md">
-      <h1 class="text-3xl font-semibold mb-4">Invocation de Carte</h1>
-      <div class="flex gap-10 justify-center">
-        <button @click="invokeRandomCard" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Single
-        </button>
-        <button @click="invokeMultipleCards(10)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Multi
-        </button>
-      </div>
-      <div v-if="invokedCards.length > 0" class="mt-4">
-        <h2 class="text-xl font-semibold mb-2">Cartes Invoquées :</h2>
-        <div class="grid grid-cols-5 gap-4">
-          <div v-for="(invokedCard, index) in invokedCards" :key="invokedCard.id">
-            <img :src="invokedCard.image" alt="Carte invoquée" class="rounded-md w-60 shadow-md">
-            <br v-if="(index + 1) % 5 === 0">
+  <NuxtLayout name="custom">
+    <div class="min-h-screen bg-[url('~/assets/img/invocation_background.png')] bg-center bg-no-repeat bg-cover flex items-center justify-center">
+      <button @click="test = !test" class="fixed opacity-0 cursor-pointer w-[10vw] h-[40vh] top-[22%] left-[31%]">test</button>
+      <div v-show="test" class="p-20 bg-blue-600 rounded-lg shadow-md">
+        <div class="flex gap-10 px-10 py-3 rounded-lg justify-center">
+          <button @click="cardInvoker.invokeRandomCard()" class="bg-black text-2xl hover:bg-blue-700 text-white font-bold py-4 px-8 rounded">
+            Single
+          </button>
+          <button @click="cardInvoker.invokeMultipleCards(10)" class="bg-black text-2xl hover:bg-blue-700 text-white font-bold py-4 px-8 rounded">
+            Multi
+          </button>
+        </div>
+        <div v-if="cardInvoker.invokedCards.value.length > 0" class="my-4">
+          <div v-if="cardInvoker.isMultiInvocation.value" class="flex justify-center">
+            <div class="grid grid-cols-5 gap-4">
+              <div v-for="(invokedCard, index) in cardInvoker.invokedCards.value" :key="invokedCard.id" class="transition ease-in-out duration-500 transform hover:scale-110">
+                <img :src="invokedCard.image" alt="Carte invoquée" class="rounded-md w-60 shadow-md opacity-100 hover:opacity-75">
+                <br v-if="(index + 1) % 5 === 0">
+              </div>
+            </div>
+          </div>
+          <div v-else class="flex justify-center">
+            <img :src="cardInvoker.invokedCards.value[0].image" alt="Carte invoquée" class="rounded-md w-60 shadow-md opacity-100 hover:opacity-75 transition ease-in-out duration-500 transform hover:scale-110">
+          </div>
+          <div class="flex justify-center">
+            <button v-if="cardInvoker.isMultiInvocation.value && cardInvoker.invokedCards.value.length === 10" @click="cardInvoker.continueInvocation()" class="bg-green-500 text-2xl hover:bg-green-700 text-white font-bold py-4 px-8 rounded mt-4">
+              Parfait !
+            </button>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </NuxtLayout>
 </template>
 
-
 <script setup>
-import { ref } from 'vue';
-import { useUserStore } from '~/store/user'
+import CardInvoker from '~/services/CardInvoker';
 
-const cards = ref([]);
-const supabase = useSupabaseClient();
-const invokedCard = ref(null);
-const invokedCards = ref([]);
-const userStore = useUserStore()
+const test = ref(false);
+const cardInvoker = new CardInvoker();
 
-onMounted(async () => {
-  try {
-    const { data, error } = await supabase.from('cards').select('*');
-  
-    if (error) {
-      console.error('Error fetching data from Supabase:', error.message);
-    } else {
-      cards.value = data;
-      console.log('Fetched:', data);
-      console.log('Fetched:', cards.value[0].image);
-    }
-  } catch (error) {
-    console.error('An error occurred during data fetching:', error.message);
-  }
-});
-
-const clearInvokedCards = () => {
-  invokedCards.value = [];
-};
-
-const invokeMultipleCards = async (numberOfCards) => {
-  // Clear the history before invoking new cards
-  clearInvokedCards();
-
-  try {
-    const userEmail = userStore.userData.email;
-
-    for (let i = 0; i < numberOfCards; i++) {
-      const randomIndex = Math.floor(Math.random() * cards.value.length);
-      const randomCard = cards.value[randomIndex];
-
-      // Vérifier si la carte existe déjà pour cet utilisateur
-      const { data: existingUserCards, error: existingUserCardError } = await supabase
-        .from('user_cards')
-        .select('quantity')
-        .eq('id_card', randomCard.id)
-        .eq('email_user', userEmail);
-
-      if (existingUserCardError) {
-        console.error('Erreur lors de la vérification de la carte utilisateur existante:', existingUserCardError.message);
-      } else {
-        // Si des cartes existent, prendre la première et mettre à jour la quantité
-        if (existingUserCards && existingUserCards.length > 0) {
-          const existingUserCard = existingUserCards[0];
-          const updatedQuantity = existingUserCard.quantity + 1;
-
-          // Utiliser await pour s'assurer que la mise à jour est terminée avant de passer à la carte suivante
-          await supabase
-            .from('user_cards')
-            .update({ quantity: updatedQuantity })
-            .eq('id_card', randomCard.id)
-            .eq('email_user', userEmail);
-          
-          console.log('Quantité mise à jour avec succès:', updatedQuantity);
-          console.log('Image path:', randomCard.image);
-
-          // Push the invoked card to the array
-          invokedCards.value.push(randomCard);
-        } else {
-          // Si aucune carte n'existe, insérer une nouvelle ligne avec une quantité de 1
-          const { data, error } = await supabase.from('user_cards').insert([
-            {
-              id_card: randomCard.id,
-              quantity: 1,
-              email_user: userEmail,
-            },
-          ]);
-
-          if (error) {
-            console.error('Erreur lors de l\'insertion dans la table card_user:', error.message);
-          } else {
-            console.log('Invocation enregistrée avec succès dans la table card_user:', data);
-
-            // Push the invoked card to the array
-            invokedCards.value.push(randomCard);
-          }
-        }
-      }
-    }
-  } catch (error) {
-    console.error('Une erreur est survenue lors de l\'invocation de la carte:', error.message);
-  }
-};
-
-
-const invokeRandomCard = async () => {
-  // Clear the history before invoking new cards
-  clearInvokedCards();
-
-  try {
-    const randomIndex = Math.floor(Math.random() * cards.value.length);
-    invokedCard.value = cards.value[randomIndex];
-    const userEmail = userStore.userData.email;
-
-    // Vérifier si la carte existe déjà pour cet utilisateur
-    const { data: existingUserCards, error: existingUserCardError } = await supabase
-      .from('user_cards')
-      .select('quantity')
-      .eq('id_card', invokedCard.value.id)
-      .eq('email_user', userEmail);
-
-    if (existingUserCardError) {
-      console.error('Erreur lors de la vérification de la carte utilisateur existante:', existingUserCardError.message);
-    } else {
-      // Si des cartes existent, prendre la première et mettre à jour la quantité
-      if (existingUserCards && existingUserCards.length > 0) {
-        const existingUserCard = existingUserCards[0];
-        const updatedQuantity = existingUserCard.quantity + 1;
-        const { data: updateData, error: updateError } = await supabase
-          .from('user_cards')
-          .update({ quantity: updatedQuantity })
-          .eq('id_card', invokedCard.value.id)
-          .eq('email_user', userEmail);
-
-        if (updateError) {
-          console.error('Erreur lors de la mise à jour de la quantité:', updateError.message);
-        } else {
-          console.log('Quantité mise à jour avec succès:', updateData);
-          console.log('Image path:', invokedCard.value.image);
-
-          // Set the invoked card to the array
-          invokedCards.value.push(invokedCard.value);
-        }
-      } else {
-        // Si aucune carte n'existe, insérer une nouvelle ligne avec une quantité de 1
-        const { data, error } = await supabase.from('user_cards').insert([
-          {
-            id_card: invokedCard.value.id,
-            quantity: 1,
-            email_user: userEmail,
-          },
-        ]);
-
-        if (error) {
-          console.error('Erreur lors de l\'insertion dans la table card_user:', error.message);
-        } else {
-          console.log('Invocation enregistrée avec succès dans la table card_user:', data);
-
-          // Set the invoked card to the array
-          invokedCards.value.push(invokedCard.value);
-        }
-      }
-    }
-  } catch (error) {
-    console.error('Une erreur est survenue lors de l\'invocation de la carte:', error.message);
-  }
-};
+onMounted(cardInvoker.onMounted.bind(cardInvoker));
 </script>
