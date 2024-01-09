@@ -5,7 +5,7 @@ interface Map {
   number: string;
 }
 
-class FightServices {
+class MapServices {
   maps: Map[] = [
     { className: 'top-[40%] left-[25%]', number: '1'},
     { className: 'top-[30%] left-[33%]', number: '2'},
@@ -16,10 +16,10 @@ class FightServices {
     { className: 'top-[21%] right-[25%]', number: '7'},
     { className: 'top-[25%] right-[40%]', number: '8'},
   ];
-  async sendZone(zoneNumber) {
+  async sendZone(zoneNumber: number) {
     const userStore = useUserStore()
     userStore.userData.currentZone = zoneNumber
   }
 }
 
-export default FightServices;
+export default MapServices;

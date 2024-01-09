@@ -86,7 +86,7 @@ watch(pourcentage, async (newPourcentage) => {
         <div class="flex items-start justify-between">
           <div class="flex items-center w-full h-full">
             <div
-              class="flex w-full max-w-lg p-4 border border-gray-800 rounded-br-3xl gap-x-6 bg-gradient-to-bl from-gray-900 via-purple-900 to-blue-900"
+              class="flex w-full max-w-lg p-4 border border-gray-800 rounded-br-xl gap-x-6 bg-gradient-to-tl from-gray-300/20 via-gray-500/20 to-gray-400/20"
             >
               <!-- <img
                 src="~/assets/img/empty-avatar.jpg"
@@ -135,12 +135,15 @@ watch(pourcentage, async (newPourcentage) => {
 
           <div></div>
         </div>
-        <HomeMenu class="z-10" />
+      <HomeMenu class="fixed top-0 right-0 left-0 z-10" />
+
       </div>
 
       <div
         class="w-full h-screen bg-[url('~/assets/img/home.png')] bg-center bg-cover fixed top-0 -z-20"
-      ></div>
+      >
+
+      </div>
       <div class="absolute bottom-0 z-10 right-[10%] size-custom2">
         <button v-if="userData && userData[0] && userData[0].character === 'sumimasen'"
           @click="dialog = true"
