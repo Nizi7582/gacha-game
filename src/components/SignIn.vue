@@ -1,28 +1,10 @@
 <script setup>
-import { useUserStore } from '~/store/user'
+import UserServices from "~/services/UserServices";
 
-const userStore = useUserStore()
-const supabase = useSupabaseClient()
+const user = new UserServices();
 
-const email = ref('')
-const password = ref('')
-
-const handleLogin = async () => {
-  try {
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email.value,
-      password: password.value,
-    })
-    console.log(error)
-    if (error) throw error
-    console.log('Successfully logged in')
-    userStore.userData.isLoggedIn = true
-    userStore.userData.email = email.value
-    navigateTo('/')
-  } catch (error) {
-    alert(error.error_description || error.message)
-  }
-}
+const email = ref("");
+const password = ref("");
 </script>
 
 <template>
@@ -33,7 +15,7 @@ const handleLogin = async () => {
 
     <form
       class="flex items-center justify-center text-4xl"
-      @submit.prevent="handleLogin"
+      @submit.prevent="user.login(email, password)"
     >
       <div class="flex flex-col col-6 form-widget gap-y-6">
         <div class="">

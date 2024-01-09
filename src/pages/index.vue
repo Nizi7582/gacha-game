@@ -3,7 +3,6 @@ import { useUserStore } from '~/store/user'
 
 const userStore = useUserStore()
 const supabase = useSupabaseClient()
-const userSupabase = supabase.auth.getUser()
 
 definePageMeta({
   pageTransition: {
@@ -18,7 +17,7 @@ const level = ref(0)
 const levelCount = ref(0)
 const dialog = ref(false)
 
-async function chooseCharacter(character_name) {
+async function chooseCharacter(character_name:String) {
   const test = await supabase.from('users').update({ character: character_name }).eq('email', userStore.userData.email)
 
    if (test) {

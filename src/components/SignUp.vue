@@ -1,32 +1,9 @@
 <script setup>
-// import { useUserStore } from './store/user';
+import UserServices from '~/services/UserServices';
 
-// const userStore = useUserStore()
-const supabase = useSupabaseClient()
-
-const loading = ref(false)
+const user = new UserServices()
 const email = ref('')
 const password = ref('')
-
-const handleSignup = async () => {
-  try {
-    loading.value = true
-    const { error } = await supabase.auth.signUp({
-      email: email.value,
-      password: password.value,
-    })
-
-    if (error) throw error
-    await supabase
-      .from('users')
-      .insert({ email: email.value, character: '', level: 0 })
-    alert('Check your email for the login link!')
-  } catch (error) {
-    alert(error.error_description || error.message)
-  } finally {
-    loading.value = false
-  }
-}
 </script>
 
 <template>
@@ -37,7 +14,7 @@ const handleSignup = async () => {
 
     <form
       class="flex items-center justify-center text-4xl"
-      @submit.prevent="handleSignup"
+      @submit.prevent="user.register(email, password)"
     >
       <div class="flex flex-col col-6 form-widget gap-y-6">
         <div class="">
