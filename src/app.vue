@@ -22,6 +22,8 @@ if (userSupabase && userSupabase.value && userSupabase.value.role === 'authentic
     userStore.userData.name = data[0].name
     userStore.userData.level = Math.trunc(data[0].level)
     userStore.userData.character = data[0].character
+    userStore.userData.gems = data[0].gems
+    userStore.userData.coins = data[0].coins
   }
 }
 

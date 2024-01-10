@@ -10,6 +10,8 @@ interface UserData {
   zone: number;
   currentZone: number;
   level: number;
+  gems: number;
+  coins: number;
 }
 
 export const useUserStore = defineStore('userStore', {
@@ -23,7 +25,9 @@ export const useUserStore = defineStore('userStore', {
       role: null,
       zone: 0,
       currentZone: 0,
-      level: 0
+      level: 0,
+      gems: 0,
+      coins: 0,
     },
   }),
   actions: {
