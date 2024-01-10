@@ -1,31 +1,3 @@
-<script setup>
-import CardInvoker from "~/services/Invocation";
-
-const openMenu = ref(false);
-const cardInvoker = new CardInvoker();
-
-onMounted(cardInvoker.onMounted.bind(cardInvoker));
-
-const rarityClass = computed(() => {
-  return cardInvoker.invokedCards.value.map((card) => {
-    return {
-      "text-gray-500": card.rarity === "r",
-      "text-blue-400": card.rarity === "sr",
-      "text-yellow-400": card.rarity === "ssr",
-    };
-  });
-});
-
-const singleCardRarityClass = computed(() => {
-  const card = cardInvoker.invokedCards.value[0];
-  return {
-    "text-gray-500": card.rarity === "r",
-    "text-blue-400": card.rarity === "sr",
-    "text-yellow-400": card.rarity === "ssr",
-  };
-});
-</script>
-
 <template>
   <NuxtLayout name="custom">
     <div
@@ -74,10 +46,7 @@ const singleCardRarityClass = computed(() => {
                 />
                 <br v-if="(index + 1) % 5 === 0" />
                 <div
-                  :class="[
-                    rarityClass[index],
-                    'absolute top-0 right-0 uppercase text-4xl text-gray px-2 pt-2 bg-gray-300 opacity-90 rounded-bl-xl',
-                  ]"
+                  class="absolute top-0 right-0 uppercase text-4xl text-gray px-2 pt-2 bg-gray-300 opacity-90 rounded-bl-xl"
                 >
                   {{ invokedCard.rarity }}
                 </div>
@@ -95,10 +64,7 @@ const singleCardRarityClass = computed(() => {
                   class="rounded-md w-60 shadow-md opacity-100 hover:opacity-75"
                 />
                 <div
-                  :class="[
-                    singleCardRarityClass,
-                    'absolute top-0 right-0 uppercase text-4xl text-gray px-2 pt-2 bg-gray-300 opacity-90 rounded-bl-xl',
-                  ]"
+                  class="absolute top-0 right-0 uppercase text-4xl text-gray px-2 pt-2 bg-gray-300 opacity-90 rounded-bl-xl"
                 >
                   {{ cardInvoker.invokedCards.value[0].rarity }}
                 </div>
@@ -123,3 +89,12 @@ const singleCardRarityClass = computed(() => {
     </div>
   </NuxtLayout>
 </template>
+
+<script setup>
+import CardInvoker from "~/services/Invocation";
+
+const openMenu = ref(false);
+const cardInvoker = new CardInvoker();
+
+onMounted(cardInvoker.onMounted.bind(cardInvoker));
+</script>
