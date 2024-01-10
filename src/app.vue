@@ -19,6 +19,7 @@ if (userSupabase && userSupabase.value && userSupabase.value.role === 'authentic
     console.error('Error fetching user data:', error)
   } else {
     // Store the user data in the userData ref
+    userStore.userData.name = data[0].name
     userStore.userData.level = Math.trunc(data[0].level)
     userStore.userData.character = data[0].character
   }

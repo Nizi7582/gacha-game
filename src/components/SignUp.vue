@@ -3,6 +3,7 @@ import UserServices from '~/services/UserServices';
 
 const user = new UserServices()
 
+const name = ref('')
 const email = ref('')
 const password = ref('')
 </script>
@@ -15,9 +16,17 @@ const password = ref('')
 
     <form
       class="flex items-center justify-center text-4xl"
-      @submit.prevent="user.register(email, password)"
+      @submit.prevent="user.register(name, email, password)"
     >
       <div class="flex flex-col col-6 form-widget gap-y-6">
+        <div class="">
+          <input
+            class="pt-1 pl-2 border-2 rounded-full"
+            type="name"
+            placeholder="Namo"
+            v-model="name"
+          />
+        </div>
         <div class="">
           <input
             class="pt-1 pl-2 border-2 rounded-full"

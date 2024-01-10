@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 
 interface UserData {
   email: string;
+  name: string;
   userId: string;
   character: string;
   isLoggedIn: boolean;
@@ -15,6 +16,7 @@ export const useUserStore = defineStore('userStore', {
   state: (): { userData: UserData } => ({
     userData: {
       email: '',
+      name: '',
       userId: '',
       character: '',
       isLoggedIn: false,

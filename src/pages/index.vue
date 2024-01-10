@@ -98,7 +98,7 @@ watch(pourcentage, async (newPourcentage) => {
               <div class="flex flex-col justify-center w-full">
                 <div class="text-4xl text-white">
                   <span class="text-yellow-600 cursor-pointer" @click="pourcentage += 23">
-                    Nizi
+                    {{ userStore.userData.name }}
                   </span>
                   - Level {{ userStore.userData.level }}
                 </div>

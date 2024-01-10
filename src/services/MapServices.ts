@@ -6,6 +6,7 @@ interface Map {
 }
 
 class MapServices {
+  // Define map's positions
   maps: Map[] = [
     { className: 'top-[40%] left-[25%]', number: 1},
     { className: 'top-[30%] left-[33%]', number: 2},
@@ -16,6 +17,8 @@ class MapServices {
     { className: 'top-[21%] right-[25%]', number: 7},
     { className: 'top-[25%] right-[40%]', number: 8},
   ];
+
+  // Get map's position
   async sendZone(zoneNumber: number) {
     const userStore = useUserStore()
     userStore.userData.currentZone = zoneNumber
