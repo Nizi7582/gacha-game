@@ -10,12 +10,6 @@ const cardClass = {
   "border-yellow-400": card.cards.rarity === "ssr",
 };
 
-const rarityClass = {
-  // "/assets/img/ssr.png": card.cards.rarity === "r",
-  "/assets/img/sr.png": card.cards.rarity === "sr",
-  "/assets/img/ssr.png": card.cards.rarity === "ssr",
-};
-
 const cardImage = card.cards.image;
 const cardName = card.cards.name;
 const cardRarity = card.cards.rarity;
@@ -34,9 +28,13 @@ const staminaIcon = "https://cdn-icons-png.flaticon.com/512/5305/5305259.png";
 <template>
   <li class="relative bg-white rounded-xl shadow border-4" :class="cardClass">
     <div class="relative">
-      <div :class="[rarityClass, 'absolute uppercase text-4xl text-gray px-2 pt-2 bg-gray-300 rounded-tl-xl rounded-br-xl']">
-        {{ cardRarity }}
+      <div class="absolute uppercase text-4xl text-gray rounded-tl-xl rounded-br-xl">
+        <img v-if="card.cards.rarity === 'lr'" src="~~/assets/img/lr.png" class="w-16" />
+        <img v-if="card.cards.rarity === 'ssr'" src="~~/assets/img/ssr.png" class="w-16" />
+        <img v-if="card.cards.rarity === 'sr'" src="~~/assets/img/sr.png" class="w-16" />
+        <img v-if="card.cards.rarity === 'r'" src="~~/assets/img/r.png" class="w-16" />
       </div>
+      
       <div :class="[rarityClass, 'absolute uppercase right-0 text-4xl text-gray p-2 rounded-tr-xl rounded-bl-xl']">
         <img src="https://img.icons8.com/emoji/48/000000/star-emoji.png" width="30px" height="30px" />
       </div>
@@ -58,8 +56,8 @@ const staminaIcon = "https://cdn-icons-png.flaticon.com/512/5305/5305259.png";
       >
         <!-- <div :class="rarityClass" class="uppercase text-4xl">
           {{ cardRarity }}
-        </div> -->
-        <img :src="'/_nuxt' + rarityClass" class="w-20" >
+        </div> 
+        <img :src="'/_nuxt' + rarityClass" class="w-20" >-->
       </div>
     </div>
   </li>
