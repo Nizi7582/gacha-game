@@ -11,9 +11,9 @@ const cardClass = {
 };
 
 const rarityClass = {
-  "text-gray-500": card.cards.rarity === "r",
-  "text-blue-400": card.cards.rarity === "sr",
-  "text-yellow-400": card.cards.rarity === "ssr",
+  // "~/assets/img/ssr.png": card.cards.rarity === "r",
+  "~/assets/img/sr.png": card.cards.rarity === "sr",
+  "~/assets/img/ssr.png": card.cards.rarity === "ssr",
 };
 
 const cardImage = card.cards.image;
@@ -54,9 +54,12 @@ const staminaIcon = "https://cdn-icons-png.flaticon.com/512/5305/5305259.png";
 
     <div class="px-4 text-center">
       <div
-        class="text-xl font-medium first-letter:uppercase text-gray-900 border-y pt-1"
+        class="absolute top-0 left-0"
       >
-        {{ cardName }}
+        <!-- <div :class="rarityClass" class="uppercase text-4xl">
+          {{ cardRarity }}
+        </div> -->
+        <img :src="rarityClass" class="w-20" >
       </div>
     </div>
   </li>
