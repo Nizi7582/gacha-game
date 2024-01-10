@@ -20,10 +20,10 @@ const dialog = ref(false)
 async function chooseCharacter(character_name:String) {
   const test = await supabase.from('users').update({ character: character_name }).eq('email', userStore.userData.email)
 
-   if (test) {
+  if (test) {
     console.log('Personnage choisit')
     location.reload();
-   }
+  }
 }
 onMounted(async () => {
   // Retrieve user data based on email

@@ -11,9 +11,9 @@ const cardClass = {
 };
 
 const rarityClass = {
-  "text-gray-500": card.cards.rarity === "r",
-  "text-blue-400": card.cards.rarity === "sr",
-  "text-yellow-400": card.cards.rarity === "ssr",
+  // "/assets/img/ssr.png": card.cards.rarity === "r",
+  "/assets/img/sr.png": card.cards.rarity === "sr",
+  "/assets/img/ssr.png": card.cards.rarity === "ssr",
 };
 
 const cardImage = card.cards.image;
@@ -42,7 +42,7 @@ const staminaIcon = "https://cdn-icons-png.flaticon.com/512/5305/5305259.png";
       </div>
       <img :src="cardImage" class="rounded-t-xl" />
       <div
-        class="absolute bg-white bottom-0 right-0 px-4 py-2 w-full text-center text-white opacity-70 flex justify-center items-center"
+        class="absolute bg-black/70 bottom-0 right-0 px-4 pt-2 w-full text-center text-white flex justify-center items-center"
       >
         <div class="flex justify-between items-center w-full mx-4">
           <StatDisplay :icon="attackIcon" :value="cardAttack" />
@@ -54,9 +54,12 @@ const staminaIcon = "https://cdn-icons-png.flaticon.com/512/5305/5305259.png";
 
     <div class="px-4 text-center">
       <div
-        class="text-xl font-medium first-letter:uppercase text-gray-900 border-y pt-1"
+        class="absolute top-0 left-0"
       >
-        {{ cardName }}
+        <!-- <div :class="rarityClass" class="uppercase text-4xl">
+          {{ cardRarity }}
+        </div> -->
+        <img :src="'/_nuxt' + rarityClass" class="w-20" >
       </div>
     </div>
   </li>
