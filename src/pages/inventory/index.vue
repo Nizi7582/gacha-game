@@ -47,7 +47,7 @@ async function loadUserCardsByEmail(userEmail) {
 </script>
 
 <template>
-  <NuxtLayout name="custom"></NuxtLayout>
+  <NuxtLayout name="custom">
     <div>
       <!-- Fixed background -->
       <div
@@ -66,5 +66,5 @@ async function loadUserCardsByEmail(userEmail) {
         </ul>
       </div>
     </div>
-  <NuxtLayout />
+  </NuxtLayout>
 </template>

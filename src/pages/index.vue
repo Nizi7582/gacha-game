@@ -132,7 +132,7 @@ watch(pourcentage, async (newPourcentage) => {
             </div>
           </div>
         </div>
-      <HomeMenu class="fixed bottom-0 left-0 right-0 z-10" />
+      <HomeMenu :userData="userStore.userData" class="fixed bottom-0 left-0 right-0 z-10" />
       </div>
       <div
         class="w-full h-screen bg-[url('~/assets/img/home.png')] bg-center bg-cover fixed top-0 -z-20"
