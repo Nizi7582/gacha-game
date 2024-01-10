@@ -1,6 +1,14 @@
 import { ref } from 'vue';
 import { useUserStore } from '~/store/user';
 
+
+const RARITY_CHANCES = {
+  r: 90,
+  sr: 7,
+  ssr: 3,
+};
+
+
 export default class CardInvoker {
   constructor() {
     this.cards = ref([]);
@@ -37,6 +45,9 @@ export default class CardInvoker {
       for (let i = 0; i < numberOfCards; i++) {
         const randomIndex = Math.floor(Math.random() * this.cards.value.length);
         const randomCard = this.cards.value[randomIndex];
+
+        // Determine rarity based on chances
+        const rarity = this.determineRarity();
 
         // Vérifier si la carte existe déjà pour cet utilisateur
         const { data: existingUserCards, error: existingUserCardError } = await this.supabase
@@ -98,6 +109,9 @@ export default class CardInvoker {
       this.invokedCard.value = this.cards.value[randomIndex];
       const userEmail = this.userStore.userData.email;
 
+      // Introduce a delay of 1.5 seconds using setTimeout
+      await new Promise(resolve => setTimeout(resolve, 200));
+      
       // Vérifier si la carte existe déjà pour cet utilisateur
       const { data: existingUserCards, error: existingUserCardError } = await this.supabase
         .from('user_cards')
@@ -152,6 +166,18 @@ export default class CardInvoker {
     }
   };
 
+  determineRarity() {
+    const chance = Math.random() * 100;
+
+    if (chance <= RARITY_CHANCES.ssr) {
+      return 'ssr';
+    } else if (chance <= RARITY_CHANCES.sr) {
+      return 'sr';
+    } else {
+      return 'r';
+    }
+  }
+
   continueInvocation() {
     console.log('continueInvocation called');
     this.invokedCards.value = [];
@@ -159,7 +185,6 @@ export default class CardInvoker {
     // Use nextTick to ensure the DOM is updated before changing the test variable
     nextTick(() => {
       console.log('Setting test to false and isMultiInvocation to false');
-      test.value = false;
       this.isMultiInvocation.value = false;
     });
   }

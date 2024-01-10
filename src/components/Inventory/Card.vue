@@ -32,14 +32,14 @@ const staminaIcon = "https://cdn-icons-png.flaticon.com/512/5305/5305259.png";
 </script>
 
 <template>
-  <li class="relative bg-white rounded-xl shadow border-2" :class="cardClass">
+  <li class="relative bg-white rounded-xl shadow border-4" :class="cardClass">
     <div class="relative">
       <div :class="[rarityClass, 'absolute uppercase text-4xl text-gray px-2 pt-2 bg-gray-300 rounded-tl-xl rounded-br-xl']">
-  {{ cardRarity }}
-</div>
-<div :class="[rarityClass, 'absolute uppercase right-0 text-4xl text-gray p-2 rounded-tr-xl rounded-bl-xl']">
-  <img src="https://img.icons8.com/emoji/48/000000/star-emoji.png" width="30px" height="30px" />
-</div>
+        {{ cardRarity }}
+      </div>
+      <div :class="[rarityClass, 'absolute uppercase right-0 text-4xl text-gray p-2 rounded-tr-xl rounded-bl-xl']">
+        <img src="https://img.icons8.com/emoji/48/000000/star-emoji.png" width="30px" height="30px" />
+      </div>
       <img :src="cardImage" class="rounded-t-xl" />
       <div
         class="absolute bg-black/70 bottom-0 right-0 px-4 pt-2 w-full text-center text-white flex justify-center items-center"
