@@ -6,6 +6,7 @@ const RARITY_CHANCES = {
   r: 90,
   sr: 7,
   ssr: 3,
+  lr: 1,
 };
 
 
@@ -173,6 +174,8 @@ export default class CardInvoker {
       return 'ssr';
     } else if (chance <= RARITY_CHANCES.sr) {
       return 'sr';
+    } else if (chance <= RARITY_CHANCES.lr) {
+      return 'lr';
     } else {
       return 'r';
     }

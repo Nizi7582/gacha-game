@@ -14,11 +14,14 @@
         <div v-if="cardInvoker.invokedCards.value.length > 0">
           <div v-if="cardInvoker.isMultiInvocation.value" class="flex justify-center">
             <div class="grid grid-cols-5 gap-4">
-              <div v-for="(invokedCard, index) in cardInvoker.invokedCards.value" :key="invokedCard.id" class="transition ease-in-out duration-500 transform hover:scale-110" :class="cardClass">
+              <div v-for="(invokedCard, index) in cardInvoker.invokedCards.value" :key="invokedCard.id" class="transition ease-in-out duration-500 transform hover:scale-110">
                 <img :src="invokedCard.image" alt="Carte invoquée" class="rounded-md w-60 shadow-md opacity-100 hover:opacity-75">
                 <br v-if="(index + 1) % 5 === 0">
                 <div :class="[rarityClass[index], 'absolute top-0 right-0 uppercase text-4xl text-gray px-2 pt-2 bg-gray-300 opacity-90 rounded-bl-xl']">
-                  {{ invokedCard.rarity }}
+                  <img v-if="invokedCard.rarity === 'lr'" src="~~/assets/img/lr.png" class="w-16" />
+                  <img v-if="invokedCard.rarity === 'ssr'" src="~~/assets/img/ssr.png" class="w-16" />
+                  <img v-if="invokedCard.rarity === 'sr'" src="~~/assets/img/sr.png" class="w-16" />
+                  <img v-if="invokedCard.rarity === 'r'" src="~~/assets/img/r.png" class="w-16" />
                 </div>
               </div>
             </div>
@@ -28,7 +31,10 @@
               <div class="transition ease-in-out duration-500 transform hover:scale-110">
                 <img :src="cardInvoker.invokedCards.value[0].image" alt="Carte invoquée" class="rounded-md w-60 shadow-md opacity-100 hover:opacity-75">
                 <div :class="[singleCardRarityClass, 'absolute top-0 right-0 uppercase text-4xl text-gray px-2 pt-2 bg-gray-300 opacity-90 rounded-bl-xl']">
-                  {{ cardInvoker.invokedCards.value[0].rarity }}
+                  <img v-if="cardInvoker.invokedCards.value[0].rarity === 'lr'" src="~~/assets/img/lr.png" class="w-16" />
+                  <img v-if="cardInvoker.invokedCards.value[0].rarity === 'ssr'" src="~~/assets/img/ssr.png" class="w-16" />
+                  <img v-if="cardInvoker.invokedCards.value[0].rarity === 'sr'" src="~~/assets/img/sr.png" class="w-16" />
+                  <img v-if="cardInvoker.invokedCards.value[0].rarity === 'r'" src="~~/assets/img/r.png" class="w-16" />
                 </div>
               </div>
             </div>
@@ -51,25 +57,6 @@ const openMenu = ref(false);
 const cardInvoker = new CardInvoker();
 
 onMounted(cardInvoker.onMounted.bind(cardInvoker));
-
-const rarityClass = computed(() => {
-  return cardInvoker.invokedCards.value.map((card) => {
-    return {
-      "text-gray-500": card.rarity === "r",
-      "text-blue-400": card.rarity === "sr",
-      "text-yellow-400": card.rarity === "ssr",
-    };
-  });
-});
-
-const singleCardRarityClass = computed(() => {
-  const card = cardInvoker.invokedCards.value[0];
-  return {
-    "text-gray-500": card.rarity === "r",
-    "text-blue-400": card.rarity === "sr",
-    "text-yellow-400": card.rarity === "ssr",
-  };
-});
 </script>
 
 

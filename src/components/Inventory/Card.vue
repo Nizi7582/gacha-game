@@ -8,6 +8,7 @@ const cardClass = {
   "border-gray-400": card.cards.rarity === "r",
   "border-blue-400": card.cards.rarity === "sr",
   "border-yellow-400": card.cards.rarity === "ssr",
+  "border-pink-400": card.cards.rarity === "lr",
 };
 
 const cardImage = card.cards.image;
