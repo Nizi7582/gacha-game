@@ -37,7 +37,6 @@
                 v-for="(invokedCard, index) in cardInvoker.invokedCards.value"
                 :key="invokedCard.id"
                 class="transition ease-in-out duration-500 transform hover:scale-110"
-                :class="cardClass"
               >
                 <img
                   :src="invokedCard.image"
@@ -46,9 +45,12 @@
                 />
                 <br v-if="(index + 1) % 5 === 0" />
                 <div
-                  class="absolute top-0 right-0 uppercase text-4xl text-gray px-2 pt-2 bg-gray-300 opacity-90 rounded-bl-xl"
+                  class="absolute top-0 right-0 uppercase text-4xl text-gray opacity-90 rounded-bl-xl"
                 >
-                  {{ invokedCard.rarity }}
+                  <img v-if="invokedCard.rarity  === 'lr'" src="~~/assets/img/lr.png" class="w-16" />
+                  <img v-if="invokedCard.rarity  === 'ssr'" src="~~/assets/img/ssr.png" class="w-16" />
+                  <img v-if="invokedCard.rarity  === 'sr'" src="~~/assets/img/sr.png" class="w-16" />
+                  <img v-if="invokedCard.rarity  === 'r'" src="~~/assets/img/r.png" class="w-16" />
                 </div>
               </div>
             </div>
@@ -64,9 +66,12 @@
                   class="rounded-md w-60 shadow-md opacity-100 hover:opacity-75"
                 />
                 <div
-                  class="absolute top-0 right-0 uppercase text-4xl text-gray px-2 pt-2 bg-gray-300 opacity-90 rounded-bl-xl"
+                  class="absolute top-0 right-0 uppercase text-4xl text-gray opacity-90 rounded-bl-xl"
                 >
-                  {{ cardInvoker.invokedCards.value[0].rarity }}
+                  <img v-if="cardInvoker.invokedCards.value[0].rarity  === 'lr'" src="~~/assets/img/lr.png" class="w-16" />
+                  <img v-if="cardInvoker.invokedCards.value[0].rarity  === 'ssr'" src="~~/assets/img/ssr.png" class="w-16" />
+                  <img v-if="cardInvoker.invokedCards.value[0].rarity  === 'sr'" src="~~/assets/img/sr.png" class="w-16" />
+                  <img v-if="cardInvoker.invokedCards.value[0].rarity  === 'r'" src="~~/assets/img/r.png" class="w-16" />
                 </div>
               </div>
             </div>

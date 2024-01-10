@@ -36,7 +36,7 @@ const staminaIcon = "https://cdn-icons-png.flaticon.com/512/5305/5305259.png";
         <img v-if="card.cards.rarity === 'r'" src="~~/assets/img/r.png" class="w-16" />
       </div>
       
-      <div :class="[rarityClass, 'absolute uppercase right-0 text-4xl text-gray p-2 rounded-tr-xl rounded-bl-xl']">
+      <div class="absolute uppercase right-0 text-4xl text-gray p-2 rounded-tr-xl rounded-bl-xl">
         <img src="https://img.icons8.com/emoji/48/000000/star-emoji.png" width="30px" height="30px" />
       </div>
       <img :src="cardImage" class="rounded-t-xl" />
