@@ -15,9 +15,9 @@ pnpm install
 
 # yarn
 yarn install
-
-Development Server
 ```
+
+### Development Server
 
 Start the development server to experience the game locally at http://localhost:3000:
 
@@ -31,14 +31,13 @@ pnpm run dev
 
 # yarn
 yarn dev
+```
 
-Production Build
-``
+### Production Build
 
 Build the game for production when you're ready to deploy:
 
-bash
-
+bash```
 # npm
 npm run build
 
@@ -52,8 +51,7 @@ Locally Preview Production Build
 
 Preview the production build locally:
 
-bash
-
+bash```
 # npm
 npm run preview
 
@@ -62,6 +60,7 @@ pnpm run preview
 
 # yarn
 yarn preview
+```
 
 For more deployment options, check out the deployment documentation.
 Game Overview
