@@ -1,6 +1,5 @@
 <script setup>
 import StatDisplay from "./StatDisplay.vue";
-import { defineProps } from "vue";
 
 const { card } = defineProps(["card"]);
 
