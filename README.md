@@ -17,9 +17,11 @@ pnpm install
 yarn install
 
 Development Server
+``
 
 Start the development server to experience the game locally at http://localhost:3000:
 
+```
 bash
 
 # npm
