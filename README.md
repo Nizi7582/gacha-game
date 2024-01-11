@@ -106,6 +106,7 @@ Navigate through the game world by winning battles and advancing on the map. Eac
 ### Currency
 
 Coins and gems are the primary currencies. Coins can be used to purchase cards, while gems are essential for summoning new fighters and accessing premium features.
+<img src="https://github.com/Nizi7582/gacha-game/assets/87717065/37b74604-28e1-41a0-8be0-aed34598d367" alt="Homepage"/>
 
 ### Battle System
 
