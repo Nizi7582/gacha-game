@@ -87,14 +87,14 @@ Upon registration, users will receive a confirmation email containing a link. Cl
 
 ### Card Summoning
 
-Assemble a formidable deck by selecting cards from your inventory. Acquire new cards through battles or by summoning fighters using gems.
+Use gems to summon powerful fighters, expanding your card inventory and enhancing your strategic options in battles.
 
 <img src="https://github.com/Nizi7582/gacha-game/assets/87717065/c706446a-51bd-4f1a-b483-a20161050e71" alt="battle" />
 
 
 ### User Inventory
 
-Use gems to summon powerful fighters, expanding your card inventory and enhancing your strategic options in battles.
+Explore your formidable card collection in the inventory to strategize and plan your next move.
 
 <img src="https://github.com/Nizi7582/gacha-game/assets/87717065/25e22c2f-87ec-4900-b4ed-c0078886c198" alt="inventory" />
 
