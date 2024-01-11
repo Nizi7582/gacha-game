@@ -46,7 +46,7 @@ pnpm run build
 
 # yarn
 yarn build
-``
+```
 
 ### Locally Preview Production Build
 
