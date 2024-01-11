@@ -36,5 +36,8 @@ export const useUserStore = defineStore('userStore', {
     registerUser(user: UserData) {
       this.userData = user;
     },
+    updateUserData(updatedData: Partial<UserData>) {
+      this.userData = { ...this.userData, ...updatedData };
+    },
   },
 });

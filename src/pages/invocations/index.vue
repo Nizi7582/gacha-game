@@ -11,20 +11,20 @@ onMounted(cardInvoker.onMounted.bind(cardInvoker));
 
 async function triggerMultiInvocation() {
   if (buttonsEnabled.value) {
+    const requiredGems = 10;
+    if (cardInvoker.userStore.userData.gems < requiredGems) {
+      console.log("Insufficient gems for a multi-card invocation.");
+      return;
+    }
+
     video.value = true;
     buttonsEnabled.value = false;
+
     setTimeout(() => {
       cardInvoker.invokeMultipleCards(10);
       video.value = false;
       buttonsEnabled.value = true;
     }, 6000);
-  }
-}
-
-function triggerSingleInvocation() {
-  if (buttonsEnabled.value) {
-    cardInvoker.invokeRandomCard();
-    buttonsEnabled.value = false;
   }
 }
 </script>
@@ -35,11 +35,13 @@ function triggerSingleInvocation() {
       <button @click="openMenu = !openMenu" class="fixed opacity-0 cursor-pointer w-[10vw] h-[40vh] top-[22%] left-[31%]"></button>
       <div v-show="openMenu" class="rounded-3xl z-10">
         <div v-if="buttonsEnabled" class="flex gap-10 px-10 py-3 rounded-lg justify-center">
-          <button v-if="!cardInvoker.isMultiInvocation.value && cardInvoker.invokedCards.value.length === 0" @click="cardInvoker.invokeRandomCard()" class="bg-black text-2xl hover:bg-gray-700 text-white font-bold py-4 px-8 rounded">
-            Single
+          <button :class="{ 'bg-red-500': cardInvoker.userStore.userData.gems < 1 }"  class="bg-black bg-opacity-85 text-2xl flex gap-10 hover:bg-gray-700 text-white font-bold py-4 px-8 rounded-full" v-if="!cardInvoker.isMultiInvocation.value && cardInvoker.invokedCards.value.length === 0" @click="cardInvoker.invokeRandomCard()">
+            <div class="flex gap-1">x1<img class="w-6 h-6" src="~/assets/img/gem.png"/></div>
+            <div>Single</div>
           </button>
-          <button v-if="!cardInvoker.isMultiInvocation.value && cardInvoker.invokedCards.value.length === 0" @click="triggerMultiInvocation()" class="bg-black text-2xl hover:bg-gray-700 text-white font-bold py-4 px-8 rounded">
-            Multi
+          <button :class="{ 'bg-red-500': cardInvoker.userStore.userData.gems < 10 }"  class="bg-black bg-opacity-80 text-2xl flex gap-10 hover:bg-gray-700 text-white font-bold py-4 px-8 rounded-full" v-if="!cardInvoker.isMultiInvocation.value && cardInvoker.invokedCards.value.length === 0" @click="triggerMultiInvocation()">
+            <div class="flex gap-1">x10<img class="w-6 h-6" src="~/assets/img/gem.png"/></div>
+            <div>Multi</div>
           </button>
         </div>
         <div v-if="cardInvoker.invokedCards.value.length > 0">
@@ -86,5 +88,6 @@ function triggerSingleInvocation() {
         <source src="../../assets/video/video_invocation1.mp4" type="video/mp4" />
       </video>
     </div>
+    <HomeRessources :userData="cardInvoker.userStore.userData" class="flex items-end justify-center gap-x-[50px] h-full" />
   </NuxtLayout>
 </template>

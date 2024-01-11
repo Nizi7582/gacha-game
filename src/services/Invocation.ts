@@ -2,11 +2,11 @@ import { ref, nextTick } from "vue";
 import { useUserStore } from "~/store/user";
 
 export default class CardInvoker {
-  private cards: any;
-  private supabase: ReturnType<typeof useSupabaseClient>;
-  private invokedCards: any;
-  private userStore: ReturnType<typeof useUserStore>;
-  private isMultiInvocation: any;
+  private cards = ref([]);
+  private supabase = useSupabaseClient();
+  private invokedCards = ref([]);
+  private userStore = useUserStore();
+  private isMultiInvocation = ref(false);
 
   constructor() {
     this.cards = ref([]);
@@ -36,6 +36,17 @@ export default class CardInvoker {
     try {
       this.isMultiInvocation.value = true;
       const userEmail = this.userStore.userData.email;
+
+      // Check if the user has enough gems for a multi-card invocation
+      const requiredGems = 10;
+      if (this.userStore.userData.gems < requiredGems) {
+        console.log("Insufficient gems for a multi-card invocation.");
+        return;
+      }
+
+      // Deduct 10 gems for a multi-card invocation
+      await this.updateUserGems(userEmail, -requiredGems);
+
       this.invokedCards.value = [];
 
       for (let i = 0; i < numberOfCards; i++) {
@@ -51,25 +62,53 @@ export default class CardInvoker {
         }
       }
     } catch (error: any) {
-      console.error("An error occurred during card invocation:", error.message);
+      console.error("An error occurred during multi-card invocation:", error.message);
     }
   }
 
   async invokeRandomCard() {
     try {
       this.isMultiInvocation.value = false;
-      const selectedRarity = this.selectRarity();
-      const filteredCards = this.cards.value.filter(
-        (card) => card.rarity === selectedRarity
-      );
 
-      if (filteredCards.length > 0) {
-        const randomIndex = Math.floor(Math.random() * filteredCards.length);
-        const randomCard = filteredCards[randomIndex];
-        await this.processCard(randomCard, this.userStore.userData.email);
+      if (this.userStore.userData.gems > 0) {
+        const selectedRarity = this.selectRarity();
+        const filteredCards = this.cards.value.filter(
+          (card) => card.rarity === selectedRarity
+        );
+
+        if (filteredCards.length > 0) {
+          const randomIndex = Math.floor(Math.random() * filteredCards.length);
+          const randomCard = filteredCards[randomIndex];
+
+          await this.updateUserGems(this.userStore.userData.email, -1);
+          await this.processCard(randomCard, this.userStore.userData.email);
+        }
+      } else {
+        console.log("L'utilisateur n'a pas suffisamment de gemmes pour effectuer cette invocation.");
       }
     } catch (error) {
       console.error("An error occurred during card invocation:", error.message);
+    }
+  }
+
+  async updateUserGems(userEmail, gemsChange) {
+    try {
+      const updatedGems = this.userStore.userData.gems + gemsChange;
+
+      const { data, error } = await this.supabase
+        .from("users")
+        .update({ gems: updatedGems })
+        .eq("email", userEmail);
+
+      if (error) {
+        console.error("Error updating user gems:", error.message);
+        this.userStore.updateUserData({ gems: this.userStore.userData.gems });
+      } else {
+        console.log("User gems updated successfully:", data);
+        this.userStore.updateUserData({ gems: updatedGems });
+      }
+    } catch (error) {
+      console.error("An error occurred during user gems update:", error.message);
     }
   }
 

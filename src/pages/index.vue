@@ -123,7 +123,8 @@ watch(pourcentage, async (newPourcentage) => {
               </div>
             </div>
           </div>
-          <HomeMenu :userData="userStore.userData" class="fixed bottom-0 left-0 right-0 z-10" />
+          <HomeMenu class="fixed bottom-0 left-0 right-0 z-10" />
+          <HomeRessources :userData="userStore.userData" class="z-10 flex items-end justify-center gap-x-[50px] h-full" />
         </div>
         <div class="w-full h-screen bg-[url('~/assets/img/home.png')] bg-center bg-cover fixed top-0 -z-20"></div>
         <div class="absolute bottom-0 right-[10%] size-custom2 -z-10">
