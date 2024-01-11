@@ -80,6 +80,7 @@ To embark on this epic journey, players must register with the following informa
 </ul>
 
 Upon registration, users will receive a confirmation email containing a link. Clicking on this link verifies their account and confirms their participation in the game.
+<img src="https://github.com/Nizi7582/gacha-game/assets/87717065/bb0648f5-974d-40c8-a5f8-b9f2dace7f4a" alt="Register"/>
 
 ## In-Game Features
 
