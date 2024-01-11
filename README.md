@@ -80,19 +80,22 @@ To embark on this epic journey, players must register with the following informa
 </ul>
 
 Upon registration, users will receive a confirmation email containing a link. Clicking on this link verifies their account and confirms their participation in the game.
+
 <img src="https://github.com/Nizi7582/gacha-game/assets/87717065/bb0648f5-974d-40c8-a5f8-b9f2dace7f4a" alt="Register"/>
 
 ## In-Game Features
 
-### Deck Building
+### Card Summoning
 
 Assemble a formidable deck by selecting cards from your inventory. Acquire new cards through battles or by summoning fighters using gems.
+
 <img src="https://github.com/Nizi7582/gacha-game/assets/87717065/c706446a-51bd-4f1a-b483-a20161050e71" alt="battle" />
 
 
-### Card Summoning
+### User Inventory
 
 Use gems to summon powerful fighters, expanding your card inventory and enhancing your strategic options in battles.
+
 <img src="https://github.com/Nizi7582/gacha-game/assets/87717065/25e22c2f-87ec-4900-b4ed-c0078886c198" alt="inventory" />
 
 ### Card Leveling
@@ -102,16 +105,19 @@ Level up your cards by gaining experience through victorious battles. Strengthen
 ### Map Progression
 
 Navigate through the game world by winning battles and advancing on the map. Each victory brings you closer to uncovering new challenges and rewards.
+
 <img src="https://github.com/Nizi7582/gacha-game/assets/87717065/6e562b97-cd86-4eb7-8db4-ec5f67465fd4" alt="map"/>
 
 ### Currency
 
 Coins and gems are the primary currencies. Coins can be used to purchase cards, while gems are essential for summoning new fighters and accessing premium features.
+
 <img src="https://github.com/Nizi7582/gacha-game/assets/87717065/37b74604-28e1-41a0-8be0-aed34598d367" alt="Homepage"/>
 
 ### Battle System
 
 Engage in thrilling battles using your carefully crafted deck. Battles are turn-based, with each player taking turns to play cards from their deck. Plan your moves strategically to outsmart your opponents and exploit their weaknesses.
+
 ![battle](https://github.com/Nizi7582/gacha-game/assets/87717065/144babb5-5816-4e8c-a188-ce8278e3193e)
 
 ### Ready to Play?
