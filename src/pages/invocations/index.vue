@@ -1,7 +1,24 @@
+<script setup>
+import CardInvoker from "~/services/Invocation";
+
+const openMenu = ref(false);
+const video = ref(false);
+const cardInvoker = new CardInvoker();
+
+onMounted(cardInvoker.onMounted.bind(cardInvoker));
+
+async function triggerMultiInvocation() {
+  video.value = true
+  setTimeout(() => {
+    cardInvoker.invokeMultipleCards(10)
+  }, 6000);
+}
+</script>
+
 <template>
   <NuxtLayout name="custom">
     <div
-      class="min-h-screen bg-[url('~/assets/img/invocation_background.png')] bg-center bg-no-repeat bg-cover flex items-center justify-center"
+      class="min-h-screen bg-[url('~/assets/img/invocation_background.png')] bg-center bg-no-repeat bg-cover flex items-center justify-center z-10"
     >
       <!-- Hidden button for invocation -->
       <button
@@ -11,7 +28,7 @@
       <!-- Menu for invocation -->
       <div
         v-show="openMenu"
-        class="p-20 bg-white bg-opacity-70 rounded-3xl shadow-md"
+        class="rounded-3xl shadow-md z-10"
       >
         <div class="flex gap-10 px-10 py-3 rounded-lg justify-center">
           <button
@@ -21,7 +38,7 @@
             Single
           </button>
           <button
-            @click="cardInvoker.invokeMultipleCards(10)"
+            @click="triggerMultiInvocation()"
             class="bg-black text-2xl hover:bg-gray-700 text-white font-bold py-4 px-8 rounded"
           >
             Multi
@@ -91,15 +108,32 @@
           </div>
         </div>
       </div>
+      
+    </div>
+    <div v-if="video"
+      class="min-h-screen absolute top-0 bottom-0 left-0 right-0 overflow-hidden"
+      >
+      <video
+        preload="metadata"
+        audio="false"
+        autoplay="autoplay"
+        muted
+        class="-rotate-90 transform w-full h-[200vh] -mt-[50vh]"
+      >
+        <source src="../../assets/video/video_invocation1.mp4" type="video/mp4" />
+      </video>
+      
+      <!-- <video
+        preload="metadata"
+        audio="false"
+        autoplay="autoplay"
+        muted
+        class="w-full h-screen"
+      >
+        <source src="../../assets/video/video_invocation2.mp4" type="video/mp4" />
+      </video> -->
     </div>
   </NuxtLayout>
 </template>
 
-<script setup>
-import CardInvoker from "~/services/Invocation";
 
-const openMenu = ref(false);
-const cardInvoker = new CardInvoker();
-
-onMounted(cardInvoker.onMounted.bind(cardInvoker));
-</script>
