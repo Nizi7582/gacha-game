@@ -79,7 +79,7 @@ function getRarityLabel(rarity: string) {
             <h2 class="text-4xl font-semibold text-left text-gray-800 pt-6 text-white ml-4">
               {{ getRarityLabel(rarity) }}
             </h2>
-            <ul class="grid grid-cols-1 mt-10 md:grid-cols-9 lg:grid-cols-6 gap-4 m-4">
+            <ul class="grid grid-cols-1 mt-10 md:grid-cols-9 lg:grid-cols-5 gap-y-12 gap-x-4 m-4">
               <InventoryCard v-for="card in filterUserCardsByRarity(rarity)" :key="card.id" :card="card" />
             </ul>
           </div>

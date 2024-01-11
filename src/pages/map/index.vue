@@ -49,7 +49,7 @@ async function loadUserCardsByEmail() {
 //   "~/assets/img/ssr.png": card.cards.rarity === "ssr",
 // };
 
-async function selectUnit(selectedUnit) {
+async function selectUnit(selectedUnit: any) {
   fightStore.fightData.allies[cardCount.value] = selectedUnit
   if (cardCount.value <= 3) {
     cardCount.value += 1
@@ -176,7 +176,6 @@ onMounted(async () => {
 
                     </div>
                   </button>
-                  <div />
                     
                 </div>
                 
@@ -236,4 +235,3 @@ onMounted(async () => {
         
     </div>
 </template>
-
