@@ -78,7 +78,8 @@ To embark on this epic journey, players must register with the following informa
 
 Upon registration, users will receive a confirmation email containing a link. Clicking on this link verifies their account and confirms their participation in the game.
 In-Game Features
-Deck Building
+
+### Deck Building
 
 Assemble a formidable deck by selecting cards from your inventory. Acquire new cards through battles or by summoning fighters using gems.
 
@@ -97,5 +98,6 @@ Navigate through the game world by winning battles and advancing on the map. Eac
 ### Currency
 
 Coins and gems are the primary currencies. Coins can be used to purchase cards, while gems are essential for summoning new fighters and accessing premium features.
-Ready to Play?
+
+### Ready to Play?
 Now that you're acquainted with the game, launch the development server, build for production, and start your journey in this thrilling Gacha Game! May your cards be ever in your favor!
