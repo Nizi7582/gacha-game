@@ -37,7 +37,7 @@ yarn dev
 
 Build the game for production when you're ready to deploy:
 
-bash```
+``bash
 # npm
 npm run build
 
@@ -46,13 +46,13 @@ pnpm run build
 
 # yarn
 yarn build
-```
+``
 
 ### Locally Preview Production Build
 
 Preview the production build locally:
 
-bash```
+```bash
 # npm
 npm run preview
 
