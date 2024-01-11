@@ -46,8 +46,9 @@ pnpm run build
 
 # yarn
 yarn build
+```
 
-Locally Preview Production Build
+### Locally Preview Production Build
 
 Preview the production build locally:
 
@@ -63,7 +64,8 @@ yarn preview
 ```
 
 For more deployment options, check out the deployment documentation.
-Game Overview
+
+### Game Overview
 
 Our Gacha Game revolves around collecting and battling with cards. Each card in your deck has unique stats for attack, defense, and speed. Cards come in different rarities, including S, SR, and SRR.
 User Registration
@@ -79,18 +81,21 @@ In-Game Features
 Deck Building
 
 Assemble a formidable deck by selecting cards from your inventory. Acquire new cards through battles or by summoning fighters using gems.
-Card Summoning
+
+### Card Summoning
 
 Use gems to summon powerful fighters, expanding your card inventory and enhancing your strategic options in battles.
-Card Leveling
+
+### Card Leveling
 
 Level up your cards by gaining experience through victorious battles. Strengthen your deck and unlock new abilities to overcome tougher challenges.
-Map Progression
+
+### Map Progression
 
 Navigate through the game world by winning battles and advancing on the map. Each victory brings you closer to uncovering new challenges and rewards.
-Currency
+
+### Currency
 
 Coins and gems are the primary currencies. Coins can be used to purchase cards, while gems are essential for summoning new fighters and accessing premium features.
 Ready to Play?
-
 Now that you're acquainted with the game, launch the development server, build for production, and start your journey in this thrilling Gacha Game! May your cards be ever in your favor!
