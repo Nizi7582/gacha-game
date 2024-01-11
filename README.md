@@ -65,10 +65,11 @@ yarn preview
 
 For more deployment options, check out the deployment documentation.
 
-### Game Overview
+## Game Overview
 
 Our Gacha Game revolves around collecting and battling with cards. Each card in your deck has unique stats for attack, defense, and speed. Cards come in different rarities, including S, SR, and SRR.
-User Registration
+
+## User Registration
 
 To embark on this epic journey, players must register with the following information:
 
@@ -79,7 +80,8 @@ To embark on this epic journey, players must register with the following informa
 </ul>
 
 Upon registration, users will receive a confirmation email containing a link. Clicking on this link verifies their account and confirms their participation in the game.
-In-Game Features
+
+## In-Game Features
 
 ### Deck Building
 
