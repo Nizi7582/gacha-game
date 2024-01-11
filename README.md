@@ -72,9 +72,11 @@ User Registration
 
 To embark on this epic journey, players must register with the following information:
 
-    Username
-    Email
-    Password
+<ul>
+    <li>Username</li>
+    <li>Email</li>
+    <li>Password</li>
+</ul>
 
 Upon registration, users will receive a confirmation email containing a link. Clicking on this link verifies their account and confirms their participation in the game.
 In-Game Features
