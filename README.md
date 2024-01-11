@@ -37,7 +37,7 @@ yarn dev
 
 Build the game for production when you're ready to deploy:
 
-``bash
+```bash
 # npm
 npm run build
 
