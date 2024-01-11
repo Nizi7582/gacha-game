@@ -89,8 +89,8 @@ Assemble a formidable deck by selecting cards from your inventory. Acquire new c
 
 ### Card Summoning
 
-<img src="https://github.com/Nizi7582/gacha-game/assets/87717065/25e22c2f-87ec-4900-b4ed-c0078886c198" alt="inventory" />
 Use gems to summon powerful fighters, expanding your card inventory and enhancing your strategic options in battles.
+<img src="https://github.com/Nizi7582/gacha-game/assets/87717065/25e22c2f-87ec-4900-b4ed-c0078886c198" alt="inventory" />
 
 ### Card Leveling
 
