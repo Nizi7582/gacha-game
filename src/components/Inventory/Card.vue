@@ -27,11 +27,11 @@ const quantityIcon = "/_nuxt/assets/icons/quantity.png";
 <template>
   <li class="relative bg-white rounded-xl shadow border-4" :class="cardClass">
     <div class="relative">
-      <div class="absolute uppercase text-4xl text-gray rounded-tl-xl rounded-br-xl">
-        <img v-if="card.cards.rarity === 'lr'" src="~/assets/img/lr.png" class="w-16" />
-        <img v-if="card.cards.rarity === 'ssr'" src="~/assets/img/ssr.png" class="w-16" />
-        <img v-if="card.cards.rarity === 'sr'" src="~/assets/img/sr.png" class="w-16" />
-        <img v-if="card.cards.rarity === 'r'" src="~/assets/img/r.png" class="w-16" />
+      <div class="absolute uppercase text-4xl text-gray rounded-tl-xl rounded-br-xl -top-[3.8vh] left-1/2 transform -translate-x-1/2">
+        <img v-if="card.cards.rarity === 'lr'" src="~/assets/img/lr.png" class="w-[4vw]" />
+        <img v-if="card.cards.rarity === 'ssr'" src="~/assets/img/ssr.png" class="w-[4vw]" />
+        <img v-if="card.cards.rarity === 'sr'" src="~/assets/img/sr.png" class="w-[4vw]"/>
+        <img v-if="card.cards.rarity === 'r'" src="~/assets/img/r.png" class="w-[4vw]" />
       </div>
       
       <img :src="cardImage" class="rounded-t-xl" />
