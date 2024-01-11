@@ -21,8 +21,7 @@ Development Server
 
 Start the development server to experience the game locally at http://localhost:3000:
 
-```
-bash
+```bash
 
 # npm
 npm run dev
@@ -34,6 +33,7 @@ pnpm run dev
 yarn dev
 
 Production Build
+``
 
 Build the game for production when you're ready to deploy:
 
