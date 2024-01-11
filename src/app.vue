@@ -24,6 +24,7 @@ if (userSupabase && userSupabase.value && userSupabase.value.role === 'authentic
     userStore.userData.character = data[0].character
     userStore.userData.gems = data[0].gems
     userStore.userData.coins = data[0].coins
+    userStore.userData.zone = data[0].zone
   }
 }
 

@@ -2,9 +2,10 @@ import { ref } from "vue";
 import { useUserStore } from "~/store/user";
 
 const RARITY_CHANCES = {
-  r: 90,
-  sr: 7,
-  ssr: 3,
+  r: 50,
+  sr: 30,
+  ssr: 19.99,
+  lr: 0.01
 };
 
 export default class CardInvoker {
@@ -211,15 +212,18 @@ export default class CardInvoker {
 
   determineRarity() {
     const chance = Math.random() * 100;
-
-    if (chance <= RARITY_CHANCES.ssr) {
+  
+    if (chance <= RARITY_CHANCES.lr) {
+      return "lr";
+    } else if (chance <= RARITY_CHANCES.ssr + RARITY_CHANCES.lr) {
       return "ssr";
-    } else if (chance <= RARITY_CHANCES.sr) {
+    } else if (chance <= RARITY_CHANCES.sr + RARITY_CHANCES.ssr + RARITY_CHANCES.lr) {
       return "sr";
     } else {
       return "r";
     }
   }
+  
 
   continueInvocation() {
     console.log("continueInvocation called");

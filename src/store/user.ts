@@ -12,6 +12,7 @@ interface UserData {
   level: number;
   gems: number;
   coins: number;
+  inFight: boolean
 }
 
 export const useUserStore = defineStore('userStore', {
@@ -28,6 +29,7 @@ export const useUserStore = defineStore('userStore', {
       level: 0,
       gems: 0,
       coins: 0,
+      inFight: false
     },
   }),
   actions: {
