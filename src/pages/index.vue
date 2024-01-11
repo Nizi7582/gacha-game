@@ -50,7 +50,7 @@ async function logout() {
     const { error } = await supabase.auth.signOut();
     await navigateTo('/login');
     if (error) throw error;
-  } catch (error) {
+  } catch (error: any) {
     console.log(error.message);
   }
 }
