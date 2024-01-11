@@ -1,14 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gacha Game Readme</title>
-</head>
-
-<body>
-
     <h1>Gacha Game Readme</h1>
 
     <p>Welcome to our Gacha Game, an exciting card-based battle adventure where strategic deck-building and tactical skills are key to victory! Explore the world, collect powerful cards, and engage in thrilling battles to advance through the map. Read on to get started!</p>
@@ -122,7 +111,3 @@ yarn preview
     <h2>Ready to Play?</h2>
 
     <p>Now that you're acquainted with the game, launch the development server, build for production, and start your journey in this thrilling Gacha Game! May your cards be ever in your favor!</p>
-
-</body>
-
-</html>
