@@ -1,17 +1,9 @@
-import { ref } from "vue";
+import { ref, nextTick } from "vue";
 import { useUserStore } from "~/store/user";
-
-const RARITY_CHANCES = {
-  r: 50,
-  sr: 30,
-  ssr: 19.99,
-  lr: 0.01
-};
 
 export default class CardInvoker {
   private cards: any;
   private supabase: ReturnType<typeof useSupabaseClient>;
-  private invokedCard: any;
   private invokedCards: any;
   private userStore: ReturnType<typeof useUserStore>;
   private isMultiInvocation: any;
@@ -19,7 +11,6 @@ export default class CardInvoker {
   constructor() {
     this.cards = ref([]);
     this.supabase = useSupabaseClient();
-    this.invokedCard = ref(null);
     this.invokedCards = ref([]);
     this.userStore = useUserStore();
     this.isMultiInvocation = ref(false);
@@ -30,20 +21,14 @@ export default class CardInvoker {
       const { data, error } = await this.supabase.from("cards").select("*");
 
       if (error) {
-        console.error(
-          "Erreur lors de la récupération des données depuis Supabase :",
-          error.message
-        );
+        console.error("Error fetching data from Supabase:", error.message);
       } else {
-        this.cards.value = data; // Use .value to update the reactive ref
-        console.log("Récupéré :", data);
-        console.log("Récupéré :", this.cards.value[0].image); // Use .value to access the array
+        this.cards.value = data;
+        console.log("Fetched:", data);
+        console.log("Fetched:", this.cards.value[0].image);
       }
     } catch (error: any) {
-      console.error(
-        "Une erreur est survenue lors de la récupération des données :",
-        error.message
-      );
+      console.error("An error occurred while fetching data:", error.message);
     }
   }
 
@@ -54,184 +39,127 @@ export default class CardInvoker {
       this.invokedCards.value = [];
 
       for (let i = 0; i < numberOfCards; i++) {
-        const randomIndex = Math.floor(Math.random() * this.cards.value.length);
-        const randomCard = this.cards.value[randomIndex];
+        const selectedRarity = this.selectRarity();
+        const filteredCards = this.cards.value.filter(
+          (card) => card.rarity === selectedRarity
+        );
 
-        // Determine rarity based on chances
-        const rarity = this.determineRarity();
-
-        // Vérifier si la carte existe déjà pour cet utilisateur
-        const { data: existingUserCards, error: existingUserCardError } =
-          await this.supabase
-            .from("user_cards")
-            .select("quantity")
-            .eq("id_card", randomCard.id)
-            .eq("email_user", userEmail);
-
-        if (existingUserCardError) {
-          console.error(
-            "Erreur lors de la vérification de la carte utilisateur existante :",
-            existingUserCardError.message
-          );
-        } else {
-          // Si des cartes existent, prendre la première et mettre à jour la quantité
-          if (existingUserCards && existingUserCards.length > 0) {
-            const existingUserCard = existingUserCards[0];
-            const updatedQuantity = existingUserCard.quantity + 1;
-
-            // Utiliser await pour s'assurer que la mise à jour est terminée avant de passer à la carte suivante
-            await this.supabase
-              .from("user_cards")
-              .update({ quantity: updatedQuantity })
-              .eq("id_card", randomCard.id)
-              .eq("email_user", userEmail);
-
-            console.log("Quantité mise à jour avec succès :", updatedQuantity);
-            console.log("Chemin de l'image :", randomCard.image);
-
-            // Ajouter la carte invoquée au tableau
-            this.invokedCards.value.push(randomCard);
-          } else {
-            // Si aucune carte n'existe, insérer une nouvelle ligne avec une quantité de 1
-            const { data, error } = await this.supabase
-              .from("user_cards")
-              .insert([
-                {
-                  id_card: randomCard.id,
-                  quantity: 1,
-                  email_user: userEmail,
-                },
-              ]);
-
-            if (error) {
-              console.error(
-                "Erreur lors de l'insertion dans la table card_user :",
-                error.message
-              );
-            } else {
-              console.log(
-                "Invocation enregistrée avec succès dans la table card_user :",
-                data
-              );
-
-              // Ajouter la carte invoquée au tableau
-              this.invokedCards.value.push(randomCard);
-            }
-          }
+        if (filteredCards.length > 0) {
+          const randomIndex = Math.floor(Math.random() * filteredCards.length);
+          const randomCard = filteredCards[randomIndex];
+          await this.processCard(randomCard, userEmail);
         }
       }
     } catch (error: any) {
-      console.error(
-        "Une erreur est survenue lors de l'invocation de la carte :",
-        error.message
-      );
+      console.error("An error occurred during card invocation:", error.message);
     }
   }
 
   async invokeRandomCard() {
     try {
       this.isMultiInvocation.value = false;
-      const randomIndex = Math.floor(Math.random() * this.cards.value.length);
-      this.invokedCard.value = this.cards.value[randomIndex];
-      const userEmail = this.userStore.userData.email;
+      const selectedRarity = this.selectRarity();
+      const filteredCards = this.cards.value.filter(
+        (card) => card.rarity === selectedRarity
+      );
 
-      // Introduce a delay of 1.5 seconds using setTimeout
-      await new Promise((resolve) => setTimeout(resolve, 200));
+      if (filteredCards.length > 0) {
+        const randomIndex = Math.floor(Math.random() * filteredCards.length);
+        const randomCard = filteredCards[randomIndex];
+        await this.processCard(randomCard, this.userStore.userData.email);
+      }
+    } catch (error) {
+      console.error("An error occurred during card invocation:", error.message);
+    }
+  }
 
-      // Vérifier si la carte existe déjà pour cet utilisateur
+  async processCard(randomCard: any, userEmail: string) {
+    try {
       const { data: existingUserCards, error: existingUserCardError } =
         await this.supabase
           .from("user_cards")
           .select("quantity")
-          .eq("id_card", this.invokedCard.value.id)
+          .eq("id_card", randomCard.id)
           .eq("email_user", userEmail);
 
       if (existingUserCardError) {
         console.error(
-          "Erreur lors de la vérification de la carte utilisateur existante :",
+          "Error checking existing user card:",
           existingUserCardError.message
         );
       } else {
-        // Si des cartes existent, prendre la première et mettre à jour la quantité
         if (existingUserCards && existingUserCards.length > 0) {
           const existingUserCard = existingUserCards[0];
           const updatedQuantity = existingUserCard.quantity + 1;
-          const { data: updateData, error: updateError } = await this.supabase
+          await this.supabase
             .from("user_cards")
             .update({ quantity: updatedQuantity })
-            .eq("id_card", this.invokedCard.value.id)
+            .eq("id_card", randomCard.id)
             .eq("email_user", userEmail);
 
-          if (updateError) {
-            console.error(
-              "Erreur lors de la mise à jour de la quantité :",
-              updateError.message
-            );
-          } else {
-            console.log("Quantité mise à jour avec succès :", updateData);
-            console.log("Chemin de l'image :", this.invokedCard.value.image);
+          console.log("Quantity updated successfully:", updatedQuantity);
+          console.log("Image path:", randomCard.image);
 
-            // Définir la carte invoquée dans le tableau
-            this.invokedCards.value = [this.invokedCard.value];
-          }
+          this.invokedCards.value.push(randomCard);
         } else {
-          // Si aucune carte n'existe, insérer une nouvelle ligne avec une quantité de 1
           const { data, error } = await this.supabase
             .from("user_cards")
             .insert([
               {
-                id_card: this.invokedCard.value.id,
+                id_card: randomCard.id,
                 quantity: 1,
                 email_user: userEmail,
               },
             ]);
 
           if (error) {
-            console.error(
-              "Erreur lors de l'insertion dans la table card_user :",
-              error.message
-            );
+            console.error("Error inserting into user_cards table:", error.message);
           } else {
-            console.log(
-              "Invocation enregistrée avec succès dans la table card_user :",
-              data
-            );
-
-            // Définir la carte invoquée dans le tableau
-            this.invokedCards.value = [this.invokedCard.value];
+            console.log("Invocation recorded successfully in user_cards table:", data);
+            this.invokedCards.value.push(randomCard);
           }
         }
       }
-    } catch (error) {
-      console.error(
-        "Une erreur est survenue lors de l'invocation de la carte :",
-        error.message
-      );
+    } catch (error: any) {
+      console.error("An error occurred during card processing:", error.message);
     }
   }
 
-  determineRarity() {
-    const chance = Math.random() * 100;
-  
-    if (chance <= RARITY_CHANCES.lr) {
-      return "lr";
-    } else if (chance <= RARITY_CHANCES.ssr + RARITY_CHANCES.lr) {
-      return "ssr";
-    } else if (chance <= RARITY_CHANCES.sr + RARITY_CHANCES.ssr + RARITY_CHANCES.lr) {
-      return "sr";
-    } else {
-      return "r";
+  selectRarity() {
+    const rarityProbabilities = {
+      r: 60,
+      sr: 20,
+      ssr: 9.8,
+      lr: 0.2,
+    };
+
+    const totalProbability = Object.values(rarityProbabilities).reduce(
+      (sum, probability) => sum + probability,
+      0
+    );
+
+    const randomProbability = Math.random() * totalProbability;
+
+    let selectedRarity;
+    let cumulativeProbability = 0;
+
+    for (const rarity in rarityProbabilities) {
+      cumulativeProbability += rarityProbabilities[rarity];
+      if (randomProbability < cumulativeProbability) {
+        selectedRarity = rarity;
+        break;
+      }
     }
+
+    return selectedRarity;
   }
-  
 
   continueInvocation() {
     console.log("continueInvocation called");
     this.invokedCards.value = [];
 
-    // Use nextTick to ensure the DOM is updated before changing the test variable
     nextTick(() => {
-      console.log("Setting test to false and isMultiInvocation to false");
+      console.log("Setting isMultiInvocation to false");
       this.isMultiInvocation.value = false;
     });
   }
