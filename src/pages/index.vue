@@ -72,6 +72,10 @@ watch(pourcentage, async (newPourcentage) => {
   width: 30%;
   height: 80%;
 }
+.size-custom3 {
+  width: 35%;
+  height: 100%;
+}
 
 .page-enter-active,
 .page-leave-active {
@@ -127,11 +131,9 @@ watch(pourcentage, async (newPourcentage) => {
           <HomeRessources :userData="userStore.userData" class="z-10 flex items-end justify-center gap-x-[50px] h-full" />
         </div>
         <div class="w-full h-screen bg-[url('~/assets/img/home.png')] bg-center bg-cover fixed top-0 -z-20"></div>
-        <div class="absolute bottom-0 right-[10%] size-custom2 -z-10">
-          <div v-if="userStore && userStore.userData && userStore.userData.character === 'sumimasen'" @click="dialog = true" class="bg-[url('~/assets/img/sumimasen.png')] w-full h-full bg-cover"></div>
-          <div v-if="userStore && userStore.userData && userStore.userData.character === 'aligato'" @click="dialog = true" class="bg-[url('~/assets/img/aligato.png')] w-full h-full bg-cover"></div>
-          <div v-if="userStore && userStore.userData && userStore.userData.character === 'kudasai'" @click="dialog = true" class="bg-[url('~/assets/img/kudasai.png')] w-full h-full bg-cover"></div>
-        </div>
+        <div v-if="userStore && userStore.userData && userStore.userData.character === 'sumimasen'" @click="dialog = true" class="bg-[url('~/assets/img/sumimasen.png')] size-custom2  bg-cover absolute bottom-0 right-[5%] -z-10"></div>
+        <div v-if="userStore && userStore.userData && userStore.userData.character === 'aligato'" @click="dialog = true" class="bg-[url('~/assets/img/aligato.png')] size-custom3  bg-cover absolute bottom-0 right-[5%] -z-10"></div>
+        <div v-if="userStore && userStore.userData && userStore.userData.character === 'kudasai'" @click="dialog = true" class="bg-[url('~/assets/img/kudasai.png')] size-custom3 bg-cover absolute bottom-0 right-[5%] -z-10"></div>
       </div>
       <div v-if="userStore.userData.character === ''" class="relative w-full h-screen">
         <div class="p-4">
