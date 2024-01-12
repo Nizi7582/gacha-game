@@ -29,7 +29,8 @@ class UserServices {
     }
   }
 
-  async register(email: string, password: string) {
+  // Register function
+  async register(name: string, email: string, password: string) {
     try {
       const { error } = await this.supabase.auth.signUp({
         email: email,
@@ -42,7 +43,7 @@ class UserServices {
       // Insert user into database
       await this.supabase
         .from("users")
-        .insert({ email: email, character: '', level: 0, zone: 0 });
+        .insert({ name: name, email: email, character: '', level: 0, zone: 1, gems: 666, coins: 100 });
       alert("Check your email for the login link!");
     } catch (error: any) {
       alert(error.error_description || error.message);

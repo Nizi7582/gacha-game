@@ -1,16 +1,4 @@
-<template>
-  <div class="bg-gray-100/40 h-screen">
-    <h2 class="text-4xl font-semibold text-center text-gray-800 py-6">
-      Le contenu de l'inventaire:
-    </h2>
-    <ul class="grid grid-cols-1 md:grid-cols-9 lg:grid-cols-6 gap-4">
-      <InventoryCard v-for="card in userCards" :key="card.id" :card="card" />
-    </ul>
-    <div class="w-full h-screen bg-[url('~/assets/img/background_invocation.png')] bg-center bg-cover fixed top-0 -z-20"></div>
-  </div>
-</template>
-
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
 import { useUserStore } from '~/store/user';
 
@@ -23,31 +11,89 @@ onMounted(() => {
   if (userEmail) {
     loadUserCardsByEmail(userEmail);
   } else {
-    console.log("User email is not defined.");
+    console.log('User email is not defined.');
   }
 });
 
-watch(() => userStore.userData.email, (newEmail) => {
-  if (newEmail) {
-    loadUserCardsByEmail(newEmail);
+watch(
+  () => userStore.userData.email,
+  (newEmail) => {
+    if (newEmail) {
+      loadUserCardsByEmail(newEmail);
+    }
   }
-});
+);
 
-async function loadUserCardsByEmail(userEmail) {
+async function loadUserCardsByEmail(userEmail: string) {
   const { data, error } = await supabase
     .from('user_cards')
-    .select(`
+    .select(
+      `
       *,
       cards (
         *
-      )
-    `)
+      ),
+      up
+    `
+    )
     .eq('email_user', userEmail);
 
   if (error) {
     console.log('Error', error);
   } else {
-    userCards.value = data;
+    userCards.value = data.map((card) => {
+      const upValue = card.up || 1;
+      card.cards.attack = Math.round(card.cards.attack * upValue);
+      card.cards.defense = Math.round(card.cards.defense * upValue);
+      card.cards.stamina = Math.round(card.cards.stamina * upValue);
+      return card;
+    });
+
+    console.log('First modified card:', userCards.value[0]);
+  }
+}
+
+function filterUserCardsByRarity(rarity: string) {
+  return userCards.value.filter((card: { cards: any }) => card.cards.rarity === rarity) as { id: string }[];
+}
+
+function getRarityLabel(rarity: string) {
+  switch (rarity) {
+    case 'lr':
+      return 'Légendaire';
+    case 'ssr':
+      return 'Super Rare';
+    case 'sr':
+      return 'Rare';
+    case 'r':
+      return 'Commun';
+    default:
+      return '';
   }
 }
 </script>
+
+<template>
+  <NuxtLayout name="custom">
+    <div>
+      <!-- Fixed background -->
+      <div class="w-full h-screen bg-[url('~/assets/img/background_invocation.png')] bg-center bg-cover fixed top-0 -z-20"></div>
+
+      <!-- Content -->
+      <div class="relative z-10 p-4">
+        <h2 class="text-4xl font-semibold text-center text-gray-800 py-6 mb-4 text-white">Le contenu de l'inventaire:</h2>
+
+        <template v-for="rarity in ['lr', 'ssr', 'sr', 'r']">
+          <div v-if="filterUserCardsByRarity(rarity).length > 0">
+            <h2 class="text-4xl font-semibold text-left text-gray-800 pt-6 text-white ml-4">
+              {{ getRarityLabel(rarity) }}
+            </h2>
+            <ul class="grid grid-cols-1 mt-10 md:grid-cols-9 lg:grid-cols-5 gap-y-12 gap-x-4 m-4">
+              <InventoryCard v-for="card in filterUserCardsByRarity(rarity)" :key="card.id" :card="card" />
+            </ul>
+          </div>
+        </template>
+      </div>
+    </div>
+  </NuxtLayout>
+</template>
