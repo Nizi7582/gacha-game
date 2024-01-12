@@ -5,7 +5,11 @@ const { imageSelected } = defineProps(["imageSelected"]);
 </script>
 
 <template>
-    <div class="rounded-xl">
-        <img :src="imageSelected" class="w-full h-full rounded-xl" />
+    <div class="relative">
+        <div class="rounded-xl h-full">
+            <img :src="imageSelected" class="w-full h-full rounded-xl" />
+        </div>
+        <slot />
     </div>
+    
 </template>
