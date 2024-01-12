@@ -43,7 +43,7 @@ class UserServices {
       // Insert user into database
       await this.supabase
         .from("users")
-        .insert({ name: name, email: email, character: '', level: 0, zone: 1, gem: 666, coins: 100 });
+        .insert({ name: name, email: email, character: '', level: 0, zone: 1, gems: 666, coins: 100 });
       alert("Check your email for the login link!");
     } catch (error: any) {
       alert(error.error_description || error.message);
