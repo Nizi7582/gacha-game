@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// import { ref } from 'vue';
-// import { useSupabaseClient } from '../../../node_modules/@nuxtjs/supabase/dist/runtime/composables/useSupabaseClient';
 import MapServices from '../../services/MapServices';
 import { useUserStore } from '../../store/user';
 import { useFightStore } from '../../store/fight';
@@ -11,6 +9,8 @@ const supabase = useSupabaseClient()
 
 const userCards = ref([])
 const cardCount = ref(0)
+
+const gameResult = ref('')
 
 let playerAttacksLeft = fightStore.fightData.allies.length;
 let enemyAttacksLeft = fightStore.fightData.ennemies.length;
@@ -32,6 +32,7 @@ async function loadUserCardsByEmail() {
     .from('user_cards')
     .select(`
       *,
+
       cards (
         *
       )
@@ -42,6 +43,34 @@ async function loadUserCardsByEmail() {
     console.log('Error', error);
   } else {
     userCards.value = data;
+  }
+}
+
+
+async function updateUserData() {
+  if (userStore.userData.currentZone === userStore.userData.zone) {
+    try {
+      const { data: updatedData, error: updateError } = await supabase
+      .from('users')
+      .update({
+        zone: userStore.userData.zone + 1,
+        coins: userStore.userData.coins + 2000,
+        gems: userStore.userData.gems + 66,
+      })
+      .eq('email', userStore.userData.email);
+
+    if (updateError) {
+      console.error('Error updating user data:', updateError.message);
+      return;
+    }
+    else {
+      gameResult = 'Cats'
+      console.log('User data updated successfully:', updatedData);
+    }
+
+  } catch (error) {
+    console.error('An unexpected error occurred:', error);
+  }
   }
 }
 
@@ -99,16 +128,6 @@ async function handleBadGuysAttack() {
     await new Promise(resolve => setTimeout(resolve, attackDelay));
   }
 
-  // Check if all enemies' cards have their defense equal to or below 0
-  const allEnemiesDefeated = fightStore.fightData.ennemies.every(ennemy => ennemy.defense <= 0);
-
-  if (allEnemiesDefeated) {
-    // Display an alert when all enemies are defeated
-    alert('All enemies are defeated!'); // You can customize this message
-
-    // You can add additional logic here to handle the end of the game
-  }
-
   // Switch back to the player's turn
   fightStore.fightData.player = 'Cats';
 
@@ -158,6 +177,7 @@ watch(isBadGuysTurn, (isBadGuysTurn) => {
 });
 
 
+
 let selectedAttackingCard = ref(null);
 let selectedDefendingCard = ref(null);
 
@@ -183,8 +203,18 @@ function LeaveMatch() {
   userStore.userData.inFight = false;
 }
 
-const isEnemyTeamDefeated = computed(() => {
-  return fightStore.fightData.ennemies.every(ennemy => ennemy.defense <= 0);
+const isEnemyTeamDefeated = computed(() => {  
+  const deadEnnemies = fightStore.fightData.ennemies.every(ennemy => ennemy.defense <= 0);
+  console.log('isEnemyTeamDefeated:', deadEnnemies); // Add this line
+
+  if (deadEnnemies && fightStore.fightData.ennemies.length > 0) {
+    // All enemies are defeated
+    gameResult.value = 'Cats'; // Update gameResult
+    updateUserData()
+    return true;
+  } else {
+    return false;
+  }
 });
 
 const isAllyTeamDefeated = computed(() => {
@@ -259,12 +289,19 @@ onMounted(async () => {
       )
     `)
     .eq('email_user', userStore.userData.email);
-
   if (error) {
     console.log('Error', error);
   } else {
     userCards.value = data;
     console.log(userCards.value)
+  }
+});
+
+watch(isEnemyTeamDefeated, (newIsEnemyTeamDefeated) => {
+  if (newIsEnemyTeamDefeated) {
+    // All enemies are defeated, you can perform actions here
+    console.log('All enemies are defeated, gameResult:', gameResult);
+    // You can trigger any other actions or logic you need here
   }
 });
 </script>
@@ -355,7 +392,7 @@ onMounted(async () => {
         <div v-if="userStore.userData.inFight" class="w-full h-screen ">
           <div class="h-full flex justify-between px-[4vw]">
             
-            <div v-if="isEnemyTeamDefeated" class="fixed inset-0 flex items-start justify-center z-50 pt-[5vh] ">
+            <div v-if="gameResult === 'Cats'" class="fixed inset-0 flex items-start justify-center z-50 pt-[5vh] ">
               <div class="flex flex-col justify-between items-center bg-white p-8 rounded shadow-md w-[25vw]  ">
                 <h2 class="text-[1.5vw] font-semibold mb-4">Congratulations!</h2>
                 <p class="text-[1.1vw]">You won the game!</p>
@@ -471,7 +508,7 @@ onMounted(async () => {
           <div
               class="w-full h-screen bg-[url('~/assets/img/fight_background.png')] bg-center bg-cover fixed top-0 -z-20 "
           ></div>
-          <audio autoplay loop src="/_nuxt/assets/audio/music_cat1.mp3" v-if="music.value"></audio>
+          <audio autoplay loop src="/_nuxt/assets/audio/music_cat1.mp3"></audio>
         </div>
 
     </div>
