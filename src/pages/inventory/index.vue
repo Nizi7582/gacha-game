@@ -32,7 +32,8 @@ async function loadUserCardsByEmail(userEmail: string) {
       *,
       cards (
         *
-      )
+      ),
+      up
     `
     )
     .eq('email_user', userEmail);
@@ -40,7 +41,15 @@ async function loadUserCardsByEmail(userEmail: string) {
   if (error) {
     console.log('Error', error);
   } else {
-    userCards.value = data;
+    userCards.value = data.map((card) => {
+      const upValue = card.up || 1;
+      card.cards.attack = Math.round(card.cards.attack * upValue);
+      card.cards.defense = Math.round(card.cards.defense * upValue);
+      card.cards.stamina = Math.round(card.cards.stamina * upValue);
+      return card;
+    });
+
+    console.log('First modified card:', userCards.value[0]);
   }
 }
 
