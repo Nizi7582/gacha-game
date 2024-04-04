@@ -358,21 +358,6 @@ watch(isEnemyTeamDefeated, (newIsEnemyTeamDefeated) => {
           </div>
           <audio autoplay loop src="/_nuxt/assets/audio/music_cat2.mp3"></audio>
         </div>
-        <!--             
-            <div class="w-full bg-gray-400/40 h-screen col-span-2">
-                <div v-for="ennemy in fightStore.fightData.ennemies" class="h-[50vh] relative">
-                    <img :src="'/_nuxt' + ennemy.image" class="" />
-                    
-                    <div class="absolute bottom-0 z-10 bg-black/70 w-full h-[9vh]">
-                      <div class="p-5 grid grid-cols-3">
-                        <InventoryStatDisplay :icon="attackIcon" :value="ennemy.attack" />
-                        <InventoryStatDisplay :icon="defenseIcon" :value="ennemy.defense" />
-                        <InventoryStatDisplay :icon="staminaIcon" :value="ennemy.speed" />
-                      </div>
-                    </div>
-
-                </div>
-            </div> -->
       </div>
       <div class="w-full h-screen bg-[url('~/assets/img/war_background.png')] bg-center bg-cover fixed top-0 -z-20"></div>
     </div>
