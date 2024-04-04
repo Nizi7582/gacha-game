@@ -12,8 +12,8 @@ export const useFightStore = defineStore('fightStore', {
   state: () => ({
     fightData: {
       ennemies: [
-        { image: '/assets/cards/ennemy1.png', attack: 20, defense: 50, speed: 30 },
-        { image: '/assets/cards/ennemy1.png', attack: 20, defense: 50, speed: 31 },
+        { image: 'https://i.ibb.co/dQ2Y7hL/ennemy1.png', attack: 20, defense: 50, speed: 30 },
+        { image: 'https://i.ibb.co/dQ2Y7hL/ennemy1.png', attack: 12, defense: 40, speed: 31 },
       ],
       allies: [
         { cards: { image: 'https://i.pinimg.com/474x/ed/8a/22/ed8a22db3ff690557cb3a1f623ee7429.jpg' }, attack: 0, defense: 0, speed: 0 },

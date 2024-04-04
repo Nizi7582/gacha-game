@@ -334,7 +334,7 @@ watch(isEnemyTeamDefeated, (newIsEnemyTeamDefeated) => {
           </div>
           <div class="h-full flex flex-col justify-between px-[4vw]">
             <div class="flex justify-center items-end gap-x-[1vw]">
-              <FightSelectedCard v-for="ennemy in fightStore.fightData.ennemies" :key="ennemy.id" class="border-2 border-red-600 rounded-xl bg-gray-300/20 h-[30vh] w-[12vw]" :imageSelected="'/_nuxt' + ennemy.image" />
+              <FightSelectedCard v-for="ennemy in fightStore.fightData.ennemies" :key="ennemy.id" class="border-2 border-red-600 rounded-xl bg-gray-300/20 h-[30vh] w-[12vw]" :imageSelected="ennemy.image" />
             </div>
 
             <div class="text-center font-bold text-purple-400 text-[3vw] text-yellow -mb-3">
@@ -461,7 +461,7 @@ watch(isEnemyTeamDefeated, (newIsEnemyTeamDefeated) => {
             :key="ennemy.id"
             class="border-2 border-red-600 rounded-xl h-[30vh] w-[12vw]"
             :class="{ 'transition hover:scale-105 hover:bg-red-600 hover:border-yellow-600 cursor-pointer': fightStore.fightData.player === 'Cats', 'ml-[2vw] transition duration-700': selectedAttackingCard === ennemy, 'ml-0 transition duration-700': selectedAttackingCard != ennemy }"
-            :imageSelected="'/_nuxt' + ennemy.image"
+            :imageSelected="ennemy.image"
             @click="selectDefendingCard(ennemy)"
           >
             <div class="absolute bottom-0 z-10 w-full">
