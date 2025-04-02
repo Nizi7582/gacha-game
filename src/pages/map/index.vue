@@ -318,7 +318,7 @@ watch(isEnemyTeamDefeated, (newIsEnemyTeamDefeated) => {
     <div v-if="!userStore.userData.inFight">
       <div class="w-full h-screen grid grid-cols-8">
         <div class="w-full bg-gray-400/40 h-screen overflow-x-hidden overflow-y-auto col-span-2 grid grid-cols-2 force-overflow" id="style-4">
-          <div v-for="unit in userCards" class="h-full transition hover:scale-105 hover:z-20 relative" @click="selectUnit(unit)">
+          <div v-for="unit in userCards" :key="unit.id" class="h-full transition hover:scale-105 hover:z-20 relative" @click="selectUnit(unit)">
             <img :src="unit.cards.image" class="" />
             <div class="absolute bottom-0 z-10 bg-black/70 w-full py-[0.5vh]">
               <div class="text-center text-white">
@@ -435,7 +435,7 @@ watch(isEnemyTeamDefeated, (newIsEnemyTeamDefeated) => {
           </FightSelectedCard>
         </div>
         <div class="w-full flex items-end gap-x-[1.4vw] text-[4vw] text-white pb-[20vh]" :class="{ 'justify-end': fightStore.fightData.player === 'Bad Guys', 'justify-start ': fightStore.fightData.player === 'Cats' }">
-          <span :class="{ 'text-red-600  pr-[3vw]': fightStore.fightData.player === 'Bad Guys', 'text-green-600 pl-[4vw]': fightStore.fightData.player === 'Cats' }">
+          <span :class="{ 'text-red-600 mr-[3vw] bg-red-900 px-6 rounded-lg border-2 border-red-600': fightStore.fightData.player === 'Bad Guys', 'text-green-600 ml-[4vw] bg-green-900 px-6 rounded-lg border-2 border-green-600': fightStore.fightData.player === 'Cats' }">
             <div v-if="fightStore.fightData.player === 'Cats'">Your turn</div>
             <div v-if="fightStore.fightData.player === 'Bad Guys'">Ennemy turn</div>
           </span>
